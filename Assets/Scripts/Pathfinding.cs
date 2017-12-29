@@ -5,7 +5,7 @@ using MyPathfinding;
 
 public class Pathfinding : MonoBehaviour {
 
-	public int ancho, alto;
+	public int ancho, alto, contaPuntos = 0;
 	public float speed;
 	Vector3 targetPosition;
 	public Camera myCamera;
@@ -45,10 +45,11 @@ public class Pathfinding : MonoBehaviour {
 			
 			transform.position = Vector3.MoveTowards (transform.position, targetPosition, speed);
 		} else {
-			if (currentPath.Count > 1) {
+			if ( contaPuntos< currentPath.Count-1) {
 				Debug.Log ("llega");
-				currentPath.RemoveAt (0);
-				targetPosition = GetPosition (currentPath [0]);
+				contaPuntos++;
+				targetPosition = GetPosition (currentPath [contaPuntos]);
+
 			}
 		}
 
@@ -69,6 +70,7 @@ public class Pathfinding : MonoBehaviour {
 
 
 	public void pathfinding(Vector3 destiny){
+		contaPuntos = 0;
 		for (int i = 0; i < ancho; i++) {
 			for (int j = 0; j < alto; j++) {
 				grid [i, j].G = 9999999;

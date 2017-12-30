@@ -51,12 +51,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\CameraMovement.cs" />
+     <Compile Include="Assets\Scripts\Camera\CameraMovement.cs" />
+     <Compile Include="Assets\Scripts\Camera\Zoom.cs" />
      <Compile Include="Assets\Scripts\Control.cs" />
-     <Compile Include="Assets\Scripts\Nodo.cs" />
-     <Compile Include="Assets\Scripts\Obstacle.cs" />
-     <Compile Include="Assets\Scripts\Pathfinding.cs" />
-     <Compile Include="Assets\Scripts\Zoom.cs" />
+     <Compile Include="Assets\Scripts\Pathfinding\Nodo.cs" />
+     <Compile Include="Assets\Scripts\Pathfinding\Obstacle.cs" />
+     <Compile Include="Assets\Scripts\Pathfinding\Pathfinding.cs" />
+     <Compile Include="Assets\Scripts\Selection\Seleccionable.cs" />
+     <Compile Include="Assets\Scripts\Selection\Selection.cs" />
+     <Compile Include="Assets\Scripts\Selection\Utils.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity 2017.2/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

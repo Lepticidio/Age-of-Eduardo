@@ -12,9 +12,12 @@ public class Pathfinding : MonoBehaviour {
 	public Nodo[,] grid;
 	public Control control;
 	public List<Nodo> currentPath = new List<Nodo>();
+	Seleccionable selec;
+	bool controlable = true;
 	void Awake(){
 		myCamera = GameObject.Find ("Main Camera").GetComponent<Camera> ();
 		control = GameObject.Find ("Controlador").GetComponent<Control> ();
+		selec = gameObject.GetComponent<Seleccionable> ();
 
 	}
 	// Use this for initialization
@@ -37,7 +40,7 @@ public class Pathfinding : MonoBehaviour {
 	void Update () {
 
 		// esto hay que quitarlo luego, tiene que ser utilizado por ia también
-		if (Input.GetButtonDown ("Fire2")){
+		if (Input.GetButtonDown ("Fire2")&&controlable && selec.selected){
 			pathfinding (myCamera.ScreenToWorldPoint (Input.mousePosition));
 		}
 

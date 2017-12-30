@@ -19,7 +19,6 @@ public static class Utils
 			return _whiteTexture;
 		}
 	}
-
 	public static void DrawScreenRect( Rect rect, Color color )
 	{
 		GUI.color = color;

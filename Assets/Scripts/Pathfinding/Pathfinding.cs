@@ -7,7 +7,7 @@ public class Pathfinding : MonoBehaviour {
 
 	public int ancho, alto, contaPuntos = 0;
 	public float speed;
-	Vector3 targetPosition;
+	Vector3 targetPosition, destiny;
 	public Camera myCamera;
 	public Nodo[,] grid;
 	public Control control;
@@ -41,7 +41,8 @@ public class Pathfinding : MonoBehaviour {
 
 		// esto hay que quitarlo luego, tiene que ser utilizado por ia también
 		if (Input.GetButtonDown ("Fire2")&&controlable && selec.selected){
-			pathfinding (myCamera.ScreenToWorldPoint (Input.mousePosition));
+			destiny = myCamera.ScreenToWorldPoint (Input.mousePosition);
+			pathfinding (destiny);
 		}
 
 		if (targetPosition != transform.position) {
@@ -49,10 +50,13 @@ public class Pathfinding : MonoBehaviour {
 			transform.position = Vector3.MoveTowards (transform.position, targetPosition, speed);
 		} else {
 			if ( contaPuntos< currentPath.Count-1) {
-				Debug.Log ("llega");
 				contaPuntos++;
 				targetPosition = GetPosition (currentPath [contaPuntos]);
 
+			}
+			else if(contaPuntos== currentPath.Count-1){
+
+				targetPosition = GetPosition (GetNodo (destiny));
 			}
 		}
 
@@ -217,4 +221,6 @@ public class Pathfinding : MonoBehaviour {
 			AddToPath (hijo.parent, ref path);
 		}
 	}
+
+
 }

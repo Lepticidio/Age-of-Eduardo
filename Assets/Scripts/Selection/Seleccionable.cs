@@ -6,42 +6,69 @@ public class Seleccionable : MonoBehaviour {
 
 	public bool selected;
 	public Camera myCamera;
-	Selection selection;
 	public float size;
+	public string nombre;
+	public Objeto objeto;
+	Selection selection;
+	BaseDatos baseDatos;
+	Interfaz interfaz;
+
 	// Use this for initialization
 	void Awake () {
 		
 		myCamera = GameObject.Find ("Main Camera").GetComponent<Camera> ();		
-		selection = GameObject.Find ("Controlador").GetComponent<Selection> ();
+		selection = GameObject.Find ("Controlador").GetComponent<Selection> ();		
+		baseDatos= GameObject.Find ("Controlador").GetComponent<BaseDatos> ();
+		interfaz= GameObject.Find ("Controlador").GetComponent<Interfaz> ();
+	}
+
+	void Start(){
+
+		objeto = baseDatos.search (nombre);
+	}
+
+	void Update(){
+		
+		if (Input.GetMouseButtonUp (0)&& selection.IsWithinSelectionBounds(gameObject)) {
+			Seleccion ();
+		}
+		if (Input.GetMouseButtonDown (0)) {
+			if( ! (Vector3.Distance( myCamera.ScreenToWorldPoint (Input.mousePosition) , transform.position)< size)){
+				//Debug.Log ("Distancia" + Vector3.Distance( myCamera.ScreenToWorldPoint (Input.mousePosition) , transform.position).ToString());
+				Deseleccion();
+			}
+			else {
+				//Debug.Log("Dibujando por selección");
+				Seleccion ();
+			}
+		}
 
 	}
 
+	void Seleccion(){
+		
+		selected = true;
+		DrawCircle(size*1.2f, 128, Color.red);
+		interfaz.nombre.text = objeto.nombreSpanish;
+		interfaz.icon.sprite = objeto.icono;
+		
+	}
 
-	void Update(){
-
-		if (Input.GetMouseButtonUp (0)&& selection.IsWithinSelectionBounds(gameObject)) {
-			selected = true;
-			DrawCircle(size*2, 128, Color.red);
-		}
-		if (Input.GetMouseButtonDown (0)) {
-			if( ! (Vector3.Distance( myCamera.ScreenToWorldPoint (Input.mousePosition) , transform.position)< size/2)){
-			selected = false;
-			StopDrawing ();
-			}
-			else {
-				selected = true;
-				DrawCircle(size*2, 128, Color.red);
-			}
-		}
-
+	void Deseleccion(){
+		selected = false;
+		StopDrawing ();
+		interfaz.nombre.text = "";
+		interfaz.icon.sprite = null;
 	}
 
 	void DrawCircle ( float radius, int numSegments, Color c1) {
 		LineRenderer lineRenderer = gameObject.GetComponent<LineRenderer>();
 		lineRenderer.material = new Material(Shader.Find("Particles/Additive"));
-		lineRenderer.SetColors(c1, c1);
-		lineRenderer.SetWidth(0.1f, 0.1f);
-		lineRenderer.SetVertexCount(numSegments + 1);
+		lineRenderer.startColor =c1;
+		lineRenderer.endColor = c1;
+		lineRenderer.startWidth = 0.1f;
+		lineRenderer.endWidth = 0.1f;
+		lineRenderer.positionCount = numSegments + 1;
 		lineRenderer.useWorldSpace = false;
 
 		float deltaTheta = (float) (2.0 * Mathf.PI) / numSegments;
@@ -53,6 +80,9 @@ public class Seleccionable : MonoBehaviour {
 			Vector3 pos = new Vector3(x, y, 0);
 			lineRenderer.SetPosition(i, pos);
 			theta += deltaTheta;
+
+
+
 		}
 	}
 

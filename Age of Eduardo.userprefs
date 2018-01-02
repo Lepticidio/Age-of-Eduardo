@@ -2,11 +2,11 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Pathfinding\Pathfinding.cs">
     <Files>
-      <File FileName="Assets\Scripts\Habilidad.cs" Line="23" Column="3" />
-      <File FileName="Assets\Scripts\Interfaz.cs" Line="45" Column="3" />
-      <File FileName="Assets\Scripts\Selection\Seleccionable.cs" Line="11" Column="23" />
+      <File FileName="Assets\Scripts\Habilidad.cs" Line="20" Column="17" />
+      <File FileName="Assets\Scripts\Interfaz.cs" Line="37" Column="25" />
+      <File FileName="Assets\Scripts\Selection\Seleccionable.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\BaseDatos.cs" Line="17" Column="20" />
-      <File FileName="Assets\Scripts\Pathfinding\Pathfinding.cs" Line="24" Column="2" />
+      <File FileName="Assets\Scripts\Pathfinding\Pathfinding.cs" Line="17" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

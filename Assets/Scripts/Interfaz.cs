@@ -38,7 +38,7 @@ public class Interfaz : MonoBehaviour {
 			
 			}
 			boton.image.sprite = habilidad.icono;
-			boton.onClick.AddListener(delegate{habilidad.Action(habilidad.nombre[0]);});
+			boton.onClick.AddListener(habilidad.Action);
 
 		}
 

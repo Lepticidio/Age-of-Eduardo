@@ -16,8 +16,8 @@ public class Habilidad {
 	}
 
 
-	public void Action(string action){
-		if (action == "Build") {
+	public void Action(){
+		if (nombre[0] == "Build") {
 			Debug.Log ("Construiría");
 		}
 	}

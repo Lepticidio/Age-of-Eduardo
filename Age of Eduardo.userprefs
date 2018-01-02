@@ -2,9 +2,14 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Selection\Seleccionable.cs">
     <Files>
-      <File FileName="Assets\Scripts\Pathfinding\Pathfinding.cs" Line="10" Column="25" />
-      <File FileName="Assets\Scripts\Selection\Seleccionable.cs" Line="10" Column="14" />
-      <File FileName="Assets\Scripts\Selection\Utils.cs" Line="21" Column="3" />
+      <File FileName="Assets\Scripts\Unidad.cs" Line="11" Column="67" />
+      <File FileName="Assets\Scripts\BaseDatos.cs" Line="30" Column="29" />
+      <File FileName="Assets\Scripts\Objeto.cs" Line="11" Column="2" />
+      <File FileName="Assets\Scripts\Habilidad.cs" Line="11" Column="39" />
+      <File FileName="Assets\Scripts\Selection\Seleccionable.cs" Line="60" Column="28" />
+      <File FileName="Assets\Scripts\Selection\Selection.cs" Line="12" Column="3" />
+      <File FileName="..\PuntuadorPoesias\Assets\Controlador.cs" Line="47" Column="40" />
+      <File FileName="Assets\Scripts\Interfaz.cs" Line="12" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

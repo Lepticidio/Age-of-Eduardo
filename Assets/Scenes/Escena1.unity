@@ -504,8 +504,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af4da02c4678524cb1aaada2c2ff52f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sizeButtonX: 0.17
+  sizeButtonY: 0.25
+  margenX: 0.05
+  margenY: 0.95
+  interfaceFraction: 0.25
   icon: {fileID: 603723108}
   nombre: {fileID: 325653330}
+  idioma: 
+  PanelHabilidades: {fileID: 20615787}
+  DefaultButton: {fileID: 114087481625965600, guid: 14b1d4632ce6b8b43a2bb2a776ad6d2c,
+    type: 2}
 --- !u!1 &325653328
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,7 +526,7 @@ GameObject:
   - component: {fileID: 325653331}
   - component: {fileID: 325653330}
   m_Layer: 0
-  m_Name: NOmbre Unidad
+  m_Name: Nombre Unidad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -951,7 +960,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0

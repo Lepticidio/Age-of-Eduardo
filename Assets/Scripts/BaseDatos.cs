@@ -15,11 +15,12 @@ public class BaseDatos: MonoBehaviour {
 		Unidad Citizen = new Unidad ("Citizen");
 		objetos.Add (Citizen);
 		Citizen.nombreSpanish = "Ciudadano";
+		Citizen.habilidades.Add (searchHabilidad ("Build"));
 
 
 	}
 
-	public Objeto search(string nombre){
+	public Objeto searchObject (string nombre){
 
 		Objeto resultado = objetos [0];
 
@@ -33,4 +34,20 @@ public class BaseDatos: MonoBehaviour {
 		return resultado;
 	
 	}
+
+	public Habilidad searchHabilidad (string nombre){
+
+		Habilidad resultado = habilidades [0];
+
+		for (int i = 0; i < objetos.Count; i++) {
+
+			if(habilidades[i].nombreEnglish == nombre){
+
+				resultado = habilidades [i];
+			}
+		}
+		return resultado;
+
+	}
+
 }

@@ -12,6 +12,7 @@ public class Seleccionable : MonoBehaviour {
 	Selection selection;
 	BaseDatos baseDatos;
 	Interfaz interfaz;
+	GameObject botonDefecto;
 
 	// Use this for initialization
 	void Awake () {
@@ -24,7 +25,7 @@ public class Seleccionable : MonoBehaviour {
 
 	void Start(){
 
-		objeto = baseDatos.search (nombre);
+		objeto = baseDatos.searchObject (nombre);
 	}
 
 	void Update(){
@@ -32,7 +33,7 @@ public class Seleccionable : MonoBehaviour {
 		if (Input.GetMouseButtonUp (0)&& selection.IsWithinSelectionBounds(gameObject)) {
 			Seleccion ();
 		}
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetMouseButtonDown (0)&& Input.mousePosition.y > myCamera.pixelHeight*interfaz.interfaceFraction) {
 			if( ! (Vector3.Distance( myCamera.ScreenToWorldPoint (Input.mousePosition) , transform.position)< size)){
 				//Debug.Log ("Distancia" + Vector3.Distance( myCamera.ScreenToWorldPoint (Input.mousePosition) , transform.position).ToString());
 				Deseleccion();
@@ -41,6 +42,9 @@ public class Seleccionable : MonoBehaviour {
 				//Debug.Log("Dibujando por selección");
 				Seleccion ();
 			}
+		}
+		else if( Input.GetMouseButton(0)){
+			Debug.Log("Altura: " + myCamera.pixelHeight.ToString() + " Position Y: " + Input.mousePosition.y.ToString());
 		}
 
 	}
@@ -51,7 +55,9 @@ public class Seleccionable : MonoBehaviour {
 		DrawCircle(size*1.2f, 128, Color.red);
 		interfaz.nombre.text = objeto.nombreSpanish;
 		interfaz.icon.sprite = objeto.icono;
-		
+		if (objeto.type == 1) {
+			interfaz.CreateHabilityButtons (objeto);
+		}
 	}
 
 	void Deseleccion(){
@@ -59,6 +65,9 @@ public class Seleccionable : MonoBehaviour {
 		StopDrawing ();
 		interfaz.nombre.text = "";
 		interfaz.icon.sprite = null;
+		foreach (GameObject boton in GameObject.FindGameObjectsWithTag("Button")) {
+			Destroy (boton);
+		}
 	}
 
 	void DrawCircle ( float radius, int numSegments, Color c1) {

@@ -10,7 +10,7 @@ public class Habilidad {
 
 	public Habilidad(string nombreEnglish){
 
-		icono = Resources.Load<Sprite> ("Sprites/Icons/" + nombreEnglish + ".png");
+		icono = Resources.Load<Sprite> ("Sprites/Icons/" + nombreEnglish);
 
 	}
 

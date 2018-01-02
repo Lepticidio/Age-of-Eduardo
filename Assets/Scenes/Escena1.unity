@@ -504,6 +504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7af4da02c4678524cb1aaada2c2ff52f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  language: 1
   sizeButtonX: 0.17
   sizeButtonY: 0.25
   margenX: 0.05

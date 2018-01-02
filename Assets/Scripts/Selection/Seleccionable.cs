@@ -43,9 +43,6 @@ public class Seleccionable : MonoBehaviour {
 				Seleccion ();
 			}
 		}
-		else if( Input.GetMouseButton(0)){
-			Debug.Log("Altura: " + myCamera.pixelHeight.ToString() + " Position Y: " + Input.mousePosition.y.ToString());
-		}
 
 	}
 
@@ -53,7 +50,7 @@ public class Seleccionable : MonoBehaviour {
 		
 		selected = true;
 		DrawCircle(size*1.2f, 128, Color.red);
-		interfaz.nombre.text = objeto.nombreSpanish;
+		interfaz.nombre.text = objeto.nombre[interfaz.language];
 		interfaz.icon.sprite = objeto.icono;
 		if (objeto.type == 1) {
 			interfaz.CreateHabilityButtons (objeto);

@@ -6,7 +6,7 @@ public class Objeto  {
 
 	public int type = 0; // Indica si el objeto es una unidad, estructura o decoración
 	public float vida;
-	public string nombreSpanish, nombreEnglish;
+	public string[] nombre = new string[2];
 
 	public List<Habilidad> habilidades = new List<Habilidad>();
 

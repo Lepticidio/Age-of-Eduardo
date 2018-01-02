@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Interfaz : MonoBehaviour {
 
+	public int language;
 	public float sizeButtonX, sizeButtonY, margenX, margenY, interfaceFraction;
 	public Image icon;
 	public Text nombre;

@@ -10,11 +10,11 @@ public class BaseDatos: MonoBehaviour {
 	void Awake () {
 		Habilidad Build = new Habilidad ("Build");
 		habilidades.Add (Build);
-		Build.nombreSpanish = "Construir";
+		Build.nombre[1] = "Construir";
 
 		Unidad Citizen = new Unidad ("Citizen");
 		objetos.Add (Citizen);
-		Citizen.nombreSpanish = "Ciudadano";
+		Citizen.nombre[1] = "Ciudadano";
 		Citizen.habilidades.Add (searchHabilidad ("Build"));
 
 
@@ -26,7 +26,7 @@ public class BaseDatos: MonoBehaviour {
 
 		for (int i = 0; i < objetos.Count; i++) {
 
-			if(objetos[i].nombreEnglish == nombre){
+			if(objetos[i].nombre[0] == nombre){
 				
 				resultado = objetos [i];
 			}
@@ -41,7 +41,7 @@ public class BaseDatos: MonoBehaviour {
 
 		for (int i = 0; i < objetos.Count; i++) {
 
-			if(habilidades[i].nombreEnglish == nombre){
+			if(habilidades[i].nombre[0] == nombre){
 
 				resultado = habilidades [i];
 			}

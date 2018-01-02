@@ -14,6 +14,28 @@ public class Pathfinding : MonoBehaviour {
 	public List<Nodo> currentPath = new List<Nodo>();
 	Seleccionable selec;
 	bool controlable = true;
+
+
+
+	/* 
+	 * CHARLA SERIA:
+	 * En algún momento tengo que convertir todo en isométrico.
+	 * */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	void Awake(){
 		myCamera = GameObject.Find ("Main Camera").GetComponent<Camera> ();
 		control = GameObject.Find ("Controlador").GetComponent<Control> ();

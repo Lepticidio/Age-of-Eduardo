@@ -14,6 +14,24 @@ public class Seleccionable : MonoBehaviour {
 	Interfaz interfaz;
 	GameObject botonDefecto;
 
+
+
+
+
+	/* 
+	 * CHARLA SERIA: 
+	 * Tengo que mejorar la selección, ahora mismo la selección individual
+	 * funciona en un 50% de los casos, y no parece que produzca los botones
+	 * de habilidades.
+	 * */
+
+
+
+
+
+
+
+
 	// Use this for initialization
 	void Awake () {
 		

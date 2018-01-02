@@ -15,15 +15,13 @@ public class Interfaz : MonoBehaviour {
 
 
 
-	public void CreateHabilityButtons(Objeto obj){
+	public void CreateHabilityButtons(Objeto obj){		
 		float xMax = sizeButtonX;
 		float xMin= margenX;
 		float yMax = margenY;
 		float yMin = margenY - sizeButtonY;
-
-
-
 		for (int i = 0; i < obj.habilidades.Count; i++) {
+			Habilidad habilidad = obj.habilidades [i];
 			Button boton = (Button)Instantiate (DefaultButton,PanelHabilidades);
 			RectTransform rtrans = boton.transform as RectTransform;
 			rtrans.anchorMax = new Vector2(xMax, yMax);
@@ -39,11 +37,8 @@ public class Interfaz : MonoBehaviour {
 				yMin -= sizeButtonY;
 			
 			}
-			if (obj.habilidades [i] == null) {
-				Debug.Log ("No hay habilidad");
-			}
-			boton.image.sprite = obj.habilidades [i].icono;
-
+			boton.image.sprite = habilidad.icono;
+			boton.onClick.AddListener(delegate{habilidad.Action(habilidad.nombre[0]);});
 
 		}
 

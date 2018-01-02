@@ -1767,6 +1767,11 @@ Prefab:
       propertyPath: m_Name
       value: Chico (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 50522877364053438, guid: 832bd273a14bd25469a55cc8c5c44ec6,
+        type: 2}
+      propertyPath: m_Mass
+      value: 0.0001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 832bd273a14bd25469a55cc8c5c44ec6, type: 2}
   m_IsPrefabParent: 0

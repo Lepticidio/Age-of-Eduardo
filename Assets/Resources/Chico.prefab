@@ -72,7 +72,7 @@ MonoBehaviour:
   ancho: 0
   alto: 0
   contaPuntos: 0
-  speed: 0.05
+  speed: 0.1
   myCamera: {fileID: 0}
   control: {fileID: 0}
 --- !u!120 &120294505245294210

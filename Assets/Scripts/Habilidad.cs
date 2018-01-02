@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Habilidad {
 
@@ -14,7 +15,10 @@ public class Habilidad {
 
 	}
 
-	public void Action(){
-		
+
+	public void Action(string action){
+		if (action == "Build") {
+			Debug.Log ("Construiría");
+		}
 	}
 }

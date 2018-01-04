@@ -9,58 +9,56 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1695111350997834}
+  m_RootGameObject: {fileID: 1739288303484090}
   m_IsPrefabParent: 1
---- !u!1 &1695111350997834
+--- !u!1 &1739288303484090
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4506566610793016}
-  - component: {fileID: 212223284682855850}
-  - component: {fileID: 114291335858546302}
+  - component: {fileID: 4430993462892718}
+  - component: {fileID: 212418297925290006}
+  - component: {fileID: 114311721738320612}
   m_Layer: 0
-  m_Name: Roca
+  m_Name: Proyection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4506566610793016
+--- !u!4 &4430993462892718
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1695111350997834}
+  m_GameObject: {fileID: 1739288303484090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.51, y: 5.44, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.6, z: 1}
+  m_LocalPosition: {x: 46.64, y: 27.65, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114291335858546302
+--- !u!114 &114311721738320612
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1695111350997834}
+  m_GameObject: {fileID: 1739288303484090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3574e4e322b50004ab58d06ff0781925, type: 3}
+  m_Script: {fileID: 11500000, guid: 1cd50f0699384c04eae029aae2df8436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nombre: Rock
-  control: {fileID: 0}
-  baseDatos: {fileID: 0}
---- !u!212 &212223284682855850
+  myCamera: {fileID: 0}
+--- !u!212 &212418297925290006
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1695111350997834}
+  m_GameObject: {fileID: 1739288303484090}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -88,13 +86,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: ce9ba824c35492443a98b1ff9aa17043, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 179a10a973a5e9247ab67d9e9924cedf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 9.6, y: 6.23}
+  m_Size: {x: 3.38, y: 3.84}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

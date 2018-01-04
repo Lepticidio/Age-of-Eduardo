@@ -6,7 +6,6 @@ public class Seleccionable : MonoBehaviour {
 
 	public bool selected;
 	public Camera myCamera;
-	public float size;
 	public string nombre;
 	public Objeto objeto;
 	Selection selection;
@@ -52,13 +51,14 @@ public class Seleccionable : MonoBehaviour {
 			Seleccion ();
 		}
 		if (Input.GetMouseButtonDown (0)&& Input.mousePosition.y > myCamera.pixelHeight*interfaz.interfaceFraction) {
-			if( ! (Vector3.Distance( myCamera.ScreenToWorldPoint (Input.mousePosition) , transform.position)< size)){
+			if(  Mathf.Abs( myCamera.ScreenToWorldPoint (Input.mousePosition).x - transform.position.x )< objeto.ancho/2 && Mathf.Abs( myCamera.ScreenToWorldPoint (Input.mousePosition).y - transform.position.y )< objeto.alto/2 ){
 				//Debug.Log ("Distancia" + Vector3.Distance( myCamera.ScreenToWorldPoint (Input.mousePosition) , transform.position).ToString());
-				Deseleccion();
+				Seleccion ();
+
 			}
 			else {
 				//Debug.Log("Dibujando por selección");
-				Seleccion ();
+				Deseleccion();
 			}
 		}
 
@@ -67,7 +67,7 @@ public class Seleccionable : MonoBehaviour {
 	void Seleccion(){
 		
 		selected = true;
-		DrawCircle(size*1.2f, 128, Color.red);
+		DrawCircle(objeto.size*1.2f, 128, Color.red);
 		interfaz.nombre.text = objeto.nombre[interfaz.language];
 		interfaz.icon.sprite = objeto.icono;
 		if (objeto.type == 1) {

@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour {
 
+	public string nombre;
 	public Control control;
-
-	public int ancho, alto;
+	public Objeto objeto;
+	public BaseDatos baseDatos;
 
 	void Awake(){
 		control = GameObject.Find ("Controlador").GetComponent<Control> ();
-	}
+		baseDatos = GameObject.Find ("Controlador").GetComponent<BaseDatos> ();
 
+	}
 	// Use this for initialization
 	void Start () {
-		for (int i = (int)(transform.position.x - ancho / 2); i < (int)(transform.position.x + ancho / 2); i++) {
-			for (int j = (int)(transform.position.y - alto / 2); j <(int)(transform.position.y + alto / 2); j++) {
+		objeto = baseDatos.searchObject (nombre);
+		for (int i = (int)(transform.position.x - objeto.ancho / 2); i < (int)(transform.position.x + objeto.ancho / 2); i++) {
+			for (int j = (int)(transform.position.y - objeto.alto / 2); j <(int)(transform.position.y + objeto.alto / 2); j++) {
 				control.grid [i,j].bloqueado = true;
 			}
 		}

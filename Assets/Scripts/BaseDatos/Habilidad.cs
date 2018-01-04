@@ -18,7 +18,12 @@ public class Habilidad {
 
 	public void Action(){
 		if (nombre[0] == "Build") {
-			Debug.Log ("Construiría");
+			Projection projection = MonoBehaviour.Instantiate (Resources.Load<GameObject>("Proyection")).GetComponent<Projection>();
+			projection.edificio = projection.control.gameObject.GetComponent<BaseDatos> ().searchObject ("Town Center") as Edificio;
+			projection.Actualizar ();
 		}
 	}
+
+
+
 }

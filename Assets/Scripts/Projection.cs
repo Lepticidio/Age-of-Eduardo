@@ -9,6 +9,8 @@ public class Projection : MonoBehaviour {
 	public Edificio edificio;
 	SpriteRenderer sr;
 	public Control control;
+	public GameObject edificioGO;
+	public Seleccionable selec;
 
 	void Awake(){
 		control = GameObject.Find ("Controlador").GetComponent<Control> ();
@@ -30,10 +32,17 @@ public class Projection : MonoBehaviour {
 			mostrarPosible ();
 		}
 
-		if(Input.GetMouseButtonUp(1)){
+		if(Input.GetMouseButtonUp(0)){
+			selec.ocupado = false;
 			Destroy(gameObject);
 		}
 
+		if(Input.GetMouseButtonUp(1)){
+			selec.ocupado = false;
+			GameObject edi = Instantiate (control.edificio, transform.position,Quaternion.identity);
+			edi.GetComponent<Obstacle> ().objeto = edificio;
+			Destroy(gameObject);
+		}
 
 
 

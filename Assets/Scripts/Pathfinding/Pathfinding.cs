@@ -7,7 +7,8 @@ public class Pathfinding : MonoBehaviour {
 
 	public int ancho, alto, contaPuntos = 0;
 	public float speed;
-	Vector3 targetPosition, destiny;
+	Vector3 targetPosition;
+	public Vector3 destiny;
 	public Camera myCamera;
 	public Nodo[,] grid;
 	public Control control;
@@ -20,6 +21,16 @@ public class Pathfinding : MonoBehaviour {
 	/* 
 	 * CHARLA SERIA:
 	 * En algún momento tengo que convertir todo en isométrico.
+	 * 
+	 * 
+	 * UPDATE:
+	 * Para pasar de posiciones en array isométrica a posiciones reales
+	 * 
+	 * xr = xi +1 + yi
+	 * yr = yi +2 - xi
+	 * 
+	 * 
+	 * 
 	 * */
 
 
@@ -61,11 +72,6 @@ public class Pathfinding : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		// esto hay que quitarlo luego, tiene que ser utilizado por ia también
-		if (Input.GetButtonDown ("Fire2")&&controlable && selec.selected){
-			destiny = myCamera.ScreenToWorldPoint (Input.mousePosition);
-			pathfinding (destiny);
-		}
 
 		if (targetPosition != transform.position) {
 			
@@ -98,7 +104,7 @@ public class Pathfinding : MonoBehaviour {
 
 
 
-	public void pathfinding(Vector3 destiny){
+	public void pathfinding(){
 		contaPuntos = 0;
 		for (int i = 0; i < ancho; i++) {
 			for (int j = 0; j < alto; j++) {

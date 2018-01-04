@@ -6,7 +6,6 @@ public class BaseDatos: MonoBehaviour {
 
 	public List<Habilidad> habilidades = new List<Habilidad>();
 	public List<Objeto> objetos = new List<Objeto>();
-
 	void Awake () {
 		
 		Habilidad Build = new Habilidad ("Build");
@@ -22,6 +21,7 @@ public class BaseDatos: MonoBehaviour {
 		Rock.size = 5;
 		Rock.alto = 5;
 		Rock.ancho = 5;
+		Rock.nombre [1] = "Roca";
 
 
 		Unidad Citizen = new Unidad ("Citizen");
@@ -34,7 +34,7 @@ public class BaseDatos: MonoBehaviour {
 
 		Edificio TownCenter = new Edificio ("Town Center");
 		objetos.Add (TownCenter);
-		TownCenter.size = 14;
+		TownCenter.size = 7;
 		TownCenter.alto = 14;
 		TownCenter.ancho = 14;
 		TownCenter.nombre[1] = "Centro Urbano";

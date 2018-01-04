@@ -16,10 +16,12 @@ public class Habilidad {
 	}
 
 
-	public void Action(){
+	public void Action(Seleccionable selec){
 		if (nombre[0] == "Build") {
 			Projection projection = MonoBehaviour.Instantiate (Resources.Load<GameObject>("Proyection")).GetComponent<Projection>();
 			projection.edificio = projection.control.gameObject.GetComponent<BaseDatos> ().searchObject ("Town Center") as Edificio;
+			projection.selec = selec;
+			selec.ocupado = true;
 			projection.Actualizar ();
 		}
 	}

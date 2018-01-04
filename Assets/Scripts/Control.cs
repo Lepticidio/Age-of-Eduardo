@@ -8,6 +8,7 @@ public class Control : MonoBehaviour {
 	public int ancho, alto;
 	public Nodo[,] grid;
 
+	public GameObject edificio;
 	// Use this for initialization
 	void Awake () {
 		grid = new Nodo[ancho, alto];

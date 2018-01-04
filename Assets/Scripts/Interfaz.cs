@@ -12,16 +12,16 @@ public class Interfaz : MonoBehaviour {
 	public string idioma;
 	public Transform PanelHabilidades;
 	public Button DefaultButton;
+	public Seleccionable selec;
 
 
-
-	public void CreateHabilityButtons(Objeto obj){		
+	public void CreateHabilityButtons(){		
 		float xMax = sizeButtonX;
 		float xMin= margenX;
 		float yMax = margenY;
 		float yMin = margenY - sizeButtonY;
-		for (int i = 0; i < obj.habilidades.Count; i++) {
-			Habilidad habilidad = obj.habilidades [i];
+		for (int i = 0; i < selec.objeto.habilidades.Count; i++) {
+			Habilidad habilidad = selec.objeto.habilidades [i];
 			Button boton = (Button)Instantiate (DefaultButton,PanelHabilidades);
 			RectTransform rtrans = boton.transform as RectTransform;
 			rtrans.anchorMax = new Vector2(xMax, yMax);
@@ -38,7 +38,8 @@ public class Interfaz : MonoBehaviour {
 			
 			}
 			boton.image.sprite = habilidad.icono;
-			boton.onClick.AddListener(habilidad.Action);
+			boton.onClick.AddListener(delegate{habilidad.Action(selec);});
+
 
 		}
 

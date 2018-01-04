@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Seleccionable : MonoBehaviour {
 
-	public bool selected;
+	public bool selected, ocupado;
 	public Camera myCamera;
 	public string nombre;
 	public Objeto objeto;
 	Selection selection;
-	BaseDatos baseDatos;
+	public BaseDatos baseDatos;
 	Interfaz interfaz;
 	GameObject botonDefecto;
+	Pathfinding pathfinding;
 
-
+	public float altura;
 
 
 
@@ -22,6 +23,16 @@ public class Seleccionable : MonoBehaviour {
 	 * Tengo que mejorar la selección, ahora mismo la selección individual
 	 * funciona en un 50% de los casos, y no parece que produzca los botones
 	 * de habilidades.
+	 * 
+	 * 
+	 * 
+	 * UPDATE:
+	 * Vale, esto es lo que pasa:
+	 * Al seleccionar un segundo objeto, estás deseleccionando el primero,
+	 * y por tanto se ejecuta deselección y le manda a interfaz que borre la info.
+	 * 
+	 * 
+	 * 
 	 * */
 
 
@@ -41,25 +52,32 @@ public class Seleccionable : MonoBehaviour {
 	}
 
 	void Start(){
-
 		objeto = baseDatos.searchObject (nombre);
+		if (objeto.type == 1) {
+			pathfinding = gameObject.GetComponent<Pathfinding> ();
+		}
+		altura = objeto.alto;
+
 	}
 
 	void Update(){
 		
-		if (Input.GetMouseButtonUp (0)&& selection.IsWithinSelectionBounds(gameObject)) {
+		if (Input.GetMouseButtonUp (0)&& selection.IsWithinSelectionBounds(gameObject)&& objeto.type ==1) {
 			Seleccion ();
 		}
 		if (Input.GetMouseButtonDown (0)&& Input.mousePosition.y > myCamera.pixelHeight*interfaz.interfaceFraction) {
-			if(  Mathf.Abs( myCamera.ScreenToWorldPoint (Input.mousePosition).x - transform.position.x )< objeto.ancho/2 && Mathf.Abs( myCamera.ScreenToWorldPoint (Input.mousePosition).y - transform.position.y )< objeto.alto/2 ){
+			if( !selected&& Mathf.Abs( myCamera.ScreenToWorldPoint (Input.mousePosition).x - transform.position.x )< objeto.ancho/2 && Mathf.Abs( myCamera.ScreenToWorldPoint (Input.mousePosition).y - transform.position.y )< objeto.alto/2 ){
 				//Debug.Log ("Distancia" + Vector3.Distance( myCamera.ScreenToWorldPoint (Input.mousePosition) , transform.position).ToString());
 				Seleccion ();
 
 			}
-			else {
-				//Debug.Log("Dibujando por selección");
+			else if (selected&&!ocupado) {
 				Deseleccion();
 			}
+		}
+		if (Input.GetMouseButtonDown (1)&&selected && objeto.type == 1 &&  !ocupado) {
+			pathfinding.destiny = myCamera.ScreenToWorldPoint (Input.mousePosition);
+			pathfinding.pathfinding ();
 		}
 
 	}
@@ -67,12 +85,12 @@ public class Seleccionable : MonoBehaviour {
 	void Seleccion(){
 		
 		selected = true;
-		DrawCircle(objeto.size*1.2f, 128, Color.red);
+		DrawCircle(objeto.size, 128, Color.red);
 		interfaz.nombre.text = objeto.nombre[interfaz.language];
 		interfaz.icon.sprite = objeto.icono;
-		if (objeto.type == 1) {
-			interfaz.CreateHabilityButtons (objeto);
-		}
+		interfaz.selec = this;
+		interfaz.CreateHabilityButtons ();
+
 	}
 
 	void Deseleccion(){
@@ -114,5 +132,6 @@ public class Seleccionable : MonoBehaviour {
 	void StopDrawing(){
 		gameObject.GetComponent<LineRenderer> ().startColor = new Color (0, 0, 0, 0);
 		gameObject.GetComponent<LineRenderer> ().endColor = new Color (0, 0, 0, 0);
+
 	}
 }

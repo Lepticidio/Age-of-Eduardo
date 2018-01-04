@@ -8,7 +8,7 @@ public class Decoration : Objeto{
 
 	public Decoration(string nombreEnglish ){
 		nombre [0] = nombreEnglish;
-		type = 1;
+		type = 3;
 		icono = Resources.Load<Sprite> ("Sprites/Icons/" + nombreEnglish);
 
 	}

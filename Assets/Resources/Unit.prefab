@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114454950228890902}
   - component: {fileID: 120294505245294210}
   m_Layer: 0
-  m_Name: Chico
+  m_Name: Unit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,9 +55,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selected: 0
+  ocupado: 0
   myCamera: {fileID: 0}
-  size: 2
   nombre: Citizen
+  baseDatos: {fileID: 0}
+  altura: 0
 --- !u!114 &114700092208380204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,6 +75,7 @@ MonoBehaviour:
   alto: 0
   contaPuntos: 0
   speed: 0.1
+  destiny: {x: 0, y: 0, z: 0}
   myCamera: {fileID: 0}
   control: {fileID: 0}
 --- !u!120 &120294505245294210

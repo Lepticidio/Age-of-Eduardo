@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MyPathfinding;
 
 public class Seleccionable : MonoBehaviour {
 
@@ -13,42 +14,20 @@ public class Seleccionable : MonoBehaviour {
 	Interfaz interfaz;
 	GameObject botonDefecto;
 	Pathfinding pathfinding;
+	Control control;
+	public List<Nodo> fronterizos = new List<Nodo>();
 
 	public float altura;
-
-
-
-	/* 
-	 * CHARLA SERIA: 
-	 * Tengo que mejorar la selección, ahora mismo la selección individual
-	 * funciona en un 50% de los casos, y no parece que produzca los botones
-	 * de habilidades.
-	 * 
-	 * 
-	 * 
-	 * UPDATE:
-	 * Vale, esto es lo que pasa:
-	 * Al seleccionar un segundo objeto, estás deseleccionando el primero,
-	 * y por tanto se ejecuta deselección y le manda a interfaz que borre la info.
-	 * 
-	 * 
-	 * 
-	 * */
-
-
-
-
-
-
 
 
 	// Use this for initialization
 	void Awake () {
 		
 		myCamera = GameObject.Find ("Main Camera").GetComponent<Camera> ();		
-		selection = GameObject.Find ("Controlador").GetComponent<Selection> ();		
-		baseDatos= GameObject.Find ("Controlador").GetComponent<BaseDatos> ();
-		interfaz= GameObject.Find ("Controlador").GetComponent<Interfaz> ();
+		control = GameObject.Find ("Controlador").GetComponent<Control> ();
+		selection = control.gameObject.GetComponent<Selection> ();
+		baseDatos= control.gameObject.GetComponent<BaseDatos> ();
+		interfaz= control.gameObject.GetComponent<Interfaz> ();
 	}
 
 	void Start(){
@@ -88,7 +67,7 @@ public class Seleccionable : MonoBehaviour {
 		DrawCircle(objeto.size, 128, Color.red);
 		interfaz.nombre.text = objeto.nombre[interfaz.language];
 		interfaz.icon.sprite = objeto.icono;
-		interfaz.selec = this;
+		interfaz.selecs.Add(this);
 		interfaz.CreateHabilityButtons ();
 
 	}
@@ -96,11 +75,7 @@ public class Seleccionable : MonoBehaviour {
 	void Deseleccion(){
 		selected = false;
 		StopDrawing ();
-		interfaz.nombre.text = "";
-		interfaz.icon.sprite = null;
-		foreach (GameObject boton in GameObject.FindGameObjectsWithTag("Button")) {
-			Destroy (boton);
-		}
+		interfaz.selecs.Remove (this);
 	}
 
 	void DrawCircle ( float radius, int numSegments, Color c1) {
@@ -123,8 +98,6 @@ public class Seleccionable : MonoBehaviour {
 			lineRenderer.SetPosition(i, pos);
 			theta += deltaTheta;
 
-
-
 		}
 	}
 
@@ -132,6 +105,18 @@ public class Seleccionable : MonoBehaviour {
 	void StopDrawing(){
 		gameObject.GetComponent<LineRenderer> ().startColor = new Color (0, 0, 0, 0);
 		gameObject.GetComponent<LineRenderer> ().endColor = new Color (0, 0, 0, 0);
+
+	}
+
+	public void GetFronterizos(){
+		fronterizos.Clear ();
+		for (int i = (int)(transform.position.x - objeto.ancho / 2)-1; i < (int)(transform.position.x + objeto.ancho / 2)+1; i++) {
+			for (int j = (int)(transform.position.y - objeto.alto / 2)-1; j < (int)(transform.position.y + objeto.alto / 2)+1; j++) {
+				if (!control.grid [i, j].bloqueado) {
+					fronterizos.Add (control.grid [i, j]);
+				}
+			}
+		}
 
 	}
 }

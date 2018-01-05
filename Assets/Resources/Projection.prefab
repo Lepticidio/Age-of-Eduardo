@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212418297925290006}
   - component: {fileID: 114311721738320612}
   m_Layer: 0
-  m_Name: Proyection
+  m_Name: Projection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,6 +55,7 @@ MonoBehaviour:
   myCamera: {fileID: 0}
   control: {fileID: 0}
   edificioGO: {fileID: 0}
+  selec: {fileID: 0}
 --- !u!212 &212418297925290006
 SpriteRenderer:
   m_ObjectHideFlags: 1

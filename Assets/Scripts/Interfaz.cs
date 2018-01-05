@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Interfaz : MonoBehaviour {
 
+	public bool cleared = true;
 	public int language;
 	public float sizeButtonX, sizeButtonY, margenX, margenY, interfaceFraction;
 	public Image icon;
@@ -12,16 +13,30 @@ public class Interfaz : MonoBehaviour {
 	public string idioma;
 	public Transform PanelHabilidades;
 	public Button DefaultButton;
-	public Seleccionable selec;
+	public List<Seleccionable> selecs = new List<Seleccionable>();
+
+	/* 
+	 * CHARLA SERIA: 
+	 * Para la selección múltiple tengo que ordenar los selecs por "prioridad".
+	 * Esta será mayor en unidades especiales con habilidades, como ciudadanos,
+	 * y entre las unidades normales cuanto más fuerte sea más "prioridad".	 * 
+	 * 
+	 * */
 
 
-	public void CreateHabilityButtons(){		
+	void Update(){
+		if (!cleared && selecs.Count == 0) {
+			ClearButtons ();
+		}
+	}
+
+	public void CreateHabilityButtons(){
 		float xMax = sizeButtonX;
 		float xMin= margenX;
 		float yMax = margenY;
 		float yMin = margenY - sizeButtonY;
-		for (int i = 0; i < selec.objeto.habilidades.Count; i++) {
-			Habilidad habilidad = selec.objeto.habilidades [i];
+		for (int i = 0; i < selecs[0].objeto.habilidades.Count; i++) {
+			Habilidad habilidad = selecs[0].objeto.habilidades [i];
 			Button boton = (Button)Instantiate (DefaultButton,PanelHabilidades);
 			RectTransform rtrans = boton.transform as RectTransform;
 			rtrans.anchorMax = new Vector2(xMax, yMax);
@@ -38,10 +53,20 @@ public class Interfaz : MonoBehaviour {
 			
 			}
 			boton.image.sprite = habilidad.icono;
-			boton.onClick.AddListener(delegate{habilidad.Action(selec);});
+			boton.onClick.AddListener(delegate{habilidad.Action(selecs[0]);});
 
 
 		}
+		cleared = false;
 
+	}
+
+	public void ClearButtons(){
+		nombre.text = "";
+		icon.sprite = null;
+		foreach (GameObject boton in GameObject.FindGameObjectsWithTag("Button")) {
+			Destroy (boton);
+		}
+		cleared = true;
 	}
 }

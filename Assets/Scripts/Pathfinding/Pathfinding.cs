@@ -13,8 +13,7 @@ public class Pathfinding : MonoBehaviour {
 	public Nodo[,] grid;
 	public Control control;
 	public List<Nodo> currentPath = new List<Nodo>();
-	Seleccionable selec;
-	bool controlable = true;
+	//bool controlable = true;
 
 
 
@@ -50,7 +49,6 @@ public class Pathfinding : MonoBehaviour {
 	void Awake(){
 		myCamera = GameObject.Find ("Main Camera").GetComponent<Camera> ();
 		control = GameObject.Find ("Controlador").GetComponent<Control> ();
-		selec = gameObject.GetComponent<Seleccionable> ();
 
 	}
 	// Use this for initialization

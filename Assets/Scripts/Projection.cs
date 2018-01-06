@@ -32,7 +32,7 @@ public class Projection : MonoBehaviour {
 			mostrarPosible ();
 		}
 
-		if(Input.GetMouseButtonUp(0)){
+		if(Input.GetMouseButtonUp(0)||Input.GetKey(KeyCode.Escape)){
 			selec.ocupado = false;
 			Destroy(gameObject);
 		}

@@ -51,17 +51,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\BaseDatos\Activa.cs" />
      <Compile Include="Assets\Scripts\BaseDatos\BaseDatos.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\Creativa.cs" />
      <Compile Include="Assets\Scripts\BaseDatos\Decoration.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\Edad.cs" />
      <Compile Include="Assets\Scripts\BaseDatos\Edificio.cs" />
      <Compile Include="Assets\Scripts\BaseDatos\Ficha.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\FuenteRecurso.cs" />
      <Compile Include="Assets\Scripts\BaseDatos\Habilidad.cs" />
      <Compile Include="Assets\Scripts\BaseDatos\Objeto.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\Recoleccion.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\Recurso.cs" />
      <Compile Include="Assets\Scripts\BaseDatos\Unidad.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\Camera\Zoom.cs" />
      <Compile Include="Assets\Scripts\Control.cs" />
      <Compile Include="Assets\Scripts\Interfaz.cs" />
+     <Compile Include="Assets\Scripts\Jugador.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\Nodo.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\Obstacle.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\Pathfinding.cs" />

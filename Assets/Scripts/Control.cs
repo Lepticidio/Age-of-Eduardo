@@ -7,6 +7,9 @@ public class Control : MonoBehaviour {
 
 	public int ancho, alto;
 	public Nodo[,] grid;
+	public Seleccionable puntero;
+
+	public List<Jugador> jugadores = new List<Jugador>();
 
 	public GameObject edificio;
 	// Use this for initialization

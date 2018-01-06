@@ -5,15 +5,19 @@ using UnityEngine.UI;
 
 public class Interfaz : MonoBehaviour {
 
+	bool iniciada;
 	public bool cleared = true;
 	public int language;
-	public float sizeButtonX, sizeButtonY, margenX, margenY, interfaceFraction;
+	public float sizeButtonX, sizeButtonY, margenX, margenY, sizePanRecursoX, sizePanRecursoY, margenXRecurso, margenYRecurso, interfaceFraction;
 	public Image icon;
 	public Text nombre;
-	public string idioma;
-	public Transform PanelHabilidades;
+	public Transform PanelHabilidades, PanelRecursos;
+	public GameObject genPanRecurso;
 	public Button DefaultButton;
 	public List<Seleccionable> selecs = new List<Seleccionable>();
+	public Jugador jugador;
+	public BaseDatos baseDatos;
+	public List<Text> textosRecursos = new List<Text>();
 
 	/* 
 	 * CHARLA SERIA: 
@@ -21,30 +25,48 @@ public class Interfaz : MonoBehaviour {
 	 * Esta será mayor en unidades especiales con habilidades, como ciudadanos,
 	 * y entre las unidades normales cuanto más fuerte sea más "prioridad".	 * 
 	 * 
+	 * También tengo que reestructurar la interfaz, y que las habilidades ocupen el hueco
+	 * iferior derecho.
+	 *
 	 * */
 
+	void Awake(){
+		baseDatos= gameObject.GetComponent<BaseDatos> ();
+	}
+
+	void Start(){
+
+		CreateResourcePanels ();
+	}
 
 	void Update(){
+		ActualizarRecursos ();
 		if (!cleared && selecs.Count == 0) {
 			ClearButtons ();
 		}
 	}
 
+
+
+
 	public void CreateHabilityButtons(){
+		ClearButtons ();
+		nombre.text = selecs[0].objeto.nombre[language];
+		icon.sprite = selecs[0].objeto.icono;
 		float xMax = sizeButtonX;
 		float xMin= margenX;
 		float yMax = margenY;
 		float yMin = margenY - sizeButtonY;
-		for (int i = 0; i < selecs[0].objeto.habilidades.Count; i++) {
-			Habilidad habilidad = selecs[0].objeto.habilidades [i];
+		for (int i = 0; i < selecs[0].objeto.creativas.Count; i++) {
+			Creativa creativa = selecs[0].objeto.creativas [i];
 			Button boton = (Button)Instantiate (DefaultButton,PanelHabilidades);
 			RectTransform rtrans = boton.transform as RectTransform;
 			rtrans.anchorMax = new Vector2(xMax, yMax);
 			rtrans.anchorMin = new Vector2(xMin, yMin);
 			rtrans.offsetMax = new Vector2(0,0);
 			rtrans.offsetMin = new Vector2(0,0);
-			xMax-= sizeButtonX;
-			xMin-= sizeButtonX;
+			xMax+= sizeButtonX;
+			xMin+= sizeButtonX;
 			if (xMax > 1) {
 				xMax = sizeButtonX;
 				xMin= margenX;
@@ -52,8 +74,30 @@ public class Interfaz : MonoBehaviour {
 				yMin -= sizeButtonY;
 			
 			}
-			boton.image.sprite = habilidad.icono;
-			boton.onClick.AddListener(delegate{habilidad.Action(selecs[0]);});
+			boton.image.sprite = creativa.icono;
+			boton.onClick.AddListener(delegate{creativa.Action(selecs[0]);});
+
+
+		}
+		for (int i = 0; i < selecs[0].objeto.activas.Count; i++) {
+			Activa activa = selecs[0].objeto.activas [i];
+			Button boton = (Button)Instantiate (DefaultButton,PanelHabilidades);
+			RectTransform rtrans = boton.transform as RectTransform;
+			rtrans.anchorMax = new Vector2(xMax, yMax);
+			rtrans.anchorMin = new Vector2(xMin, yMin);
+			rtrans.offsetMax = new Vector2(0,0);
+			rtrans.offsetMin = new Vector2(0,0);
+			xMax+= sizeButtonX;
+			xMin+= sizeButtonX;
+			if (xMax > 1) {
+				xMax = sizeButtonX;
+				xMin= margenX;
+				yMax -= sizeButtonY;
+				yMin -= sizeButtonY;
+
+			}
+			boton.image.sprite = activa.icono;
+			boton.onClick.AddListener(delegate{activa.Action(selecs[0]);});
 
 
 		}
@@ -61,6 +105,34 @@ public class Interfaz : MonoBehaviour {
 
 	}
 
+	public void CreateResourcePanels(){		
+		float xMax = sizePanRecursoX;
+		float xMin= margenXRecurso;
+		float yMax = margenYRecurso;
+		float yMin = margenYRecurso - sizePanRecursoY;
+		for (int i = 0; i < jugador.recursos.Count; i++) {
+			GameObject panRecurso = Instantiate (genPanRecurso,PanelRecursos);
+			RectTransform rtrans = panRecurso.transform as RectTransform;
+			Recurso recurso = baseDatos.recursos [i];
+			rtrans.anchorMax = new Vector2(xMax, yMax);
+			rtrans.anchorMin = new Vector2(xMin, yMin);
+			rtrans.offsetMax = new Vector2(0,0);
+			rtrans.offsetMin = new Vector2(0,0);
+			xMax+= sizePanRecursoX;
+			xMin+= sizePanRecursoX;
+			if (xMax > 1) {
+				xMax = sizePanRecursoX;
+				xMin= margenXRecurso;
+				yMax -= sizePanRecursoY;
+				yMin -= sizePanRecursoY;
+
+			}
+			panRecurso.GetComponentsInChildren<Image>()[1].sprite = recurso.icono;
+			Text textoRecurso = panRecurso.GetComponentInChildren<Text> ();
+			textoRecurso.text = ((int)jugador.recursos[i]).ToString();
+			textosRecursos.Add (textoRecurso);
+		}
+	}
 	public void ClearButtons(){
 		nombre.text = "";
 		icon.sprite = null;
@@ -68,5 +140,10 @@ public class Interfaz : MonoBehaviour {
 			Destroy (boton);
 		}
 		cleared = true;
+	}
+	void ActualizarRecursos(){
+		for (int i = 0; i< textosRecursos.Count; i++) {
+			textosRecursos[i].text = ((int)jugador.recursos[i]).ToString();
+		}
 	}
 }

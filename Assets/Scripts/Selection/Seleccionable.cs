@@ -5,7 +5,14 @@ using MyPathfinding;
 
 public class Seleccionable : MonoBehaviour {
 
-	public bool selected, ocupado;
+	/*
+	 * CHARLA SERIA:
+	 * Los ciudadanos no van a donde deberían cuando recogen recursos. 
+	 * NearestFronterizo probablemente no funciona.
+	 * */
+
+
+	public bool selected, ocupado, recolectando;
 	public Camera myCamera;
 	public string nombre;
 	public Objeto objeto;
@@ -16,9 +23,11 @@ public class Seleccionable : MonoBehaviour {
 	Pathfinding pathfinding;
 	Control control;
 	public List<Nodo> fronterizos = new List<Nodo>();
+	Seleccionable fuente;
 
 	public float altura;
 
+	public Jugador jugador;
 
 	// Use this for initialization
 	void Awake () {
@@ -40,13 +49,17 @@ public class Seleccionable : MonoBehaviour {
 	}
 
 	void Update(){
-		
+
+		if (Mathf.Abs (myCamera.ScreenToWorldPoint (Input.mousePosition).x - transform.position.x) < objeto.ancho / 2 && Mathf.Abs (myCamera.ScreenToWorldPoint (Input.mousePosition).y - transform.position.y) < objeto.alto / 2) {
+			control.puntero = this;
+		} else if (control.puntero == this) {
+			control.puntero = null;
+		}
 		if (Input.GetMouseButtonUp (0)&& selection.IsWithinSelectionBounds(gameObject)&& objeto.type ==1) {
 			Seleccion ();
 		}
 		if (Input.GetMouseButtonDown (0)&& Input.mousePosition.y > myCamera.pixelHeight*interfaz.interfaceFraction) {
-			if( !selected&& Mathf.Abs( myCamera.ScreenToWorldPoint (Input.mousePosition).x - transform.position.x )< objeto.ancho/2 && Mathf.Abs( myCamera.ScreenToWorldPoint (Input.mousePosition).y - transform.position.y )< objeto.alto/2 ){
-				//Debug.Log ("Distancia" + Vector3.Distance( myCamera.ScreenToWorldPoint (Input.mousePosition) , transform.position).ToString());
+			if( !selected&& control.puntero ==this){
 				Seleccion ();
 
 			}
@@ -54,9 +67,26 @@ public class Seleccionable : MonoBehaviour {
 				Deseleccion();
 			}
 		}
-		if (Input.GetMouseButtonDown (1)&&selected && objeto.type == 1 &&  !ocupado) {
-			pathfinding.destiny = myCamera.ScreenToWorldPoint (Input.mousePosition);
-			pathfinding.pathfinding ();
+		if (selected) {
+			if (Input.GetMouseButtonDown (1)&&objeto.type == 1 &&  !ocupado) {
+				if (control.puntero!= null&& control.puntero.objeto.type == 4&& objeto.recolecciones.Contains( (control.puntero.objeto as FuenteRecurso).recoleccion)) {
+					fuente = control.puntero;
+					fuente.GetFronterizos ();
+					if (fuente.fronterizos.Count > 0) {
+						Nodo des = fuente.NearestFronterizo (control.puntero.transform.position);
+						pathfinding.destiny = new Vector3 (des.x, des.y,0);
+						pathfinding.pathfinding ();
+						recolectando = true;
+					}
+				} else {
+					pathfinding.destiny = myCamera.ScreenToWorldPoint (Input.mousePosition);
+					pathfinding.pathfinding ();
+					recolectando = false;
+				}
+			}
+		}
+		if (recolectando && Vector3.Distance (fuente.transform.position, transform.position) < 2) {
+			(fuente.objeto as FuenteRecurso).recoleccion.Action(this);
 		}
 
 	}
@@ -65,8 +95,6 @@ public class Seleccionable : MonoBehaviour {
 		
 		selected = true;
 		DrawCircle(objeto.size, 128, Color.red);
-		interfaz.nombre.text = objeto.nombre[interfaz.language];
-		interfaz.icon.sprite = objeto.icono;
 		interfaz.selecs.Add(this);
 		interfaz.CreateHabilityButtons ();
 
@@ -118,5 +146,16 @@ public class Seleccionable : MonoBehaviour {
 			}
 		}
 
+	}
+
+	public Nodo NearestFronterizo(Vector3 pos){
+
+		Nodo resultado = fronterizos [0];
+		for (int i = 1; i < fronterizos.Count; i++) {
+			if (Vector3.SqrMagnitude (pos - new Vector3 (fronterizos [i].x, fronterizos [i].y, 0)) < Vector3.SqrMagnitude (pos - new Vector3 (resultado.x, resultado.y, 0))) {
+				resultado = fronterizos [i];
+			}
+		}
+		return resultado;
 	}
 }

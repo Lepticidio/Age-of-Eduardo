@@ -19,7 +19,7 @@ public class Seleccionable : MonoBehaviour {
 	Selection selection;
 	public BaseDatos baseDatos;
 	Interfaz interfaz;
-	GameObject botonDefecto;
+	GameObject botonDefecto, marcador;
 	Pathfinding pathfinding;
 	Control control;
 	public List<Nodo> fronterizos = new List<Nodo>();
@@ -37,6 +37,7 @@ public class Seleccionable : MonoBehaviour {
 		selection = control.gameObject.GetComponent<Selection> ();
 		baseDatos= control.gameObject.GetComponent<BaseDatos> ();
 		interfaz= control.gameObject.GetComponent<Interfaz> ();
+		marcador = Resources.Load<GameObject> ("MarcadorFresa");
 	}
 
 	void Start(){
@@ -73,7 +74,7 @@ public class Seleccionable : MonoBehaviour {
 					fuente = control.puntero;
 					fuente.GetFronterizos ();
 					if (fuente.fronterizos.Count > 0) {
-						Nodo des = fuente.NearestFronterizo (control.puntero.transform.position);
+						Nodo des = fuente.NearestFronterizo (transform.position);
 						pathfinding.destiny = new Vector3 (des.x, des.y,0);
 						pathfinding.pathfinding ();
 						recolectando = true;
@@ -85,7 +86,7 @@ public class Seleccionable : MonoBehaviour {
 				}
 			}
 		}
-		if (recolectando && Vector3.Distance (fuente.transform.position, transform.position) < 2) {
+		if (recolectando && Vector3.Distance (fuente.transform.position, transform.position) < 4) {
 			(fuente.objeto as FuenteRecurso).recoleccion.Action(this);
 		}
 
@@ -96,7 +97,7 @@ public class Seleccionable : MonoBehaviour {
 		selected = true;
 		DrawCircle(objeto.size, 128, Color.red);
 		interfaz.selecs.Add(this);
-		interfaz.CreateHabilityButtons ();
+		interfaz.Invoke ("CreateHabilityButtons", 0.05f);
 
 	}
 
@@ -138,10 +139,11 @@ public class Seleccionable : MonoBehaviour {
 
 	public void GetFronterizos(){
 		fronterizos.Clear ();
-		for (int i = (int)(transform.position.x - objeto.ancho / 2)-1; i < (int)(transform.position.x + objeto.ancho / 2)+1; i++) {
-			for (int j = (int)(transform.position.y - objeto.alto / 2)-1; j < (int)(transform.position.y + objeto.alto / 2)+1; j++) {
+		for (int i = (int)(transform.position.x - objeto.ancho / 2); i < (int)(transform.position.x + objeto.ancho / 2)+2; i++) {
+			for (int j = (int)(transform.position.y - objeto.alto / 2); j < (int)(transform.position.y + objeto.alto / 2)+2; j++) {
 				if (!control.grid [i, j].bloqueado) {
 					fronterizos.Add (control.grid [i, j]);
+					//Instantiate(marcador, new Vector3( control.grid [i, j].x, control.grid [i, j].y), Quaternion.identity);
 				}
 			}
 		}
@@ -156,6 +158,10 @@ public class Seleccionable : MonoBehaviour {
 				resultado = fronterizos [i];
 			}
 		}
+		/*
+		GameObject re = Instantiate(marcador, new Vector3( resultado.x, resultado.y), Quaternion.identity);
+		re.GetComponent<SpriteRenderer> ().color = new Color (0, 1, 1, 0.25f);
+		*/
 		return resultado;
 	}
 }

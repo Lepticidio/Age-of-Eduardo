@@ -24,8 +24,8 @@ public class Obstacle : MonoBehaviour {
 		objeto = seleccionable.objeto;
 		baseDatos = seleccionable.baseDatos;
 		control = baseDatos.gameObject.GetComponent<Control> ();
-		for (int i = (int)(transform.position.x - objeto.ancho / 2); i < (int)(transform.position.x + objeto.ancho / 2); i++) {
-			for (int j = (int)(transform.position.y - objeto.alto / 2); j < (int)(transform.position.y + objeto.alto / 2); j++) {
+		for (int i =1 + (int)(transform.position.x - objeto.ancho / 2); i < 1+(int)(transform.position.x + objeto.ancho / 2); i++) {
+			for (int j = 1+(int)(transform.position.y - objeto.alto / 2); j < 1+(int)(transform.position.y + objeto.alto / 2); j++) {
 				control.grid [i, j].bloqueado = true;
 			}
 		}

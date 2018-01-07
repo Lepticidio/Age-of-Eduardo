@@ -31,16 +31,16 @@ public class BaseDatos: MonoBehaviour {
 
 		FuenteRecurso Tree = new FuenteRecurso ("Tree", WoodCutting);
 		objetos.Add (Tree);
-		Tree.size = 2;
-		Tree.alto = 2;
-		Tree.ancho = 2;
+		Tree.size = 1;
+		Tree.alto = 1;
+		Tree.ancho = 1;
 		Tree.nombre [1] = "Árbol";
 
 		FuenteRecurso BerryBush = new FuenteRecurso ("Berry Bush", Foraging);
 		objetos.Add (BerryBush);
-		BerryBush.size = 4;
-		BerryBush.alto = 4;
-		BerryBush.ancho = 4;
+		BerryBush.size = 2;
+		BerryBush.alto = 3;
+		BerryBush.ancho = 3;
 		BerryBush.nombre [1] = "Arbusto de bayas";
 
 		Decoration Rock = new Decoration ("Rock");

@@ -1,17 +1,10 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\BaseDatos\Creativa.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Selection\Seleccionable.cs">
     <Files>
-      <File FileName="Assets\Scripts\Selection\Seleccionable.cs" Line="68" Column="5" />
-      <File FileName="Assets\Scripts\BaseDatos\BaseDatos.cs" Line="79" Column="16" />
-      <File FileName="Assets\Scripts\BaseDatos\FuenteRecurso.cs" Line="7" Column="9" />
-      <File FileName="Assets\Scripts\BaseDatos\Decoration.cs" Line="12" Column="3" />
-      <File FileName="Assets\Scripts\BaseDatos\Recoleccion.cs" Line="12" Column="30" />
-      <File FileName="Assets\Scripts\Pathfinding\Pathfinding.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Interfaz.cs" Line="78" Column="62" />
-      <File FileName="Assets\Scripts\Jugador.cs" Line="18" Column="22" />
-      <File FileName="Assets\Scripts\BaseDatos\Creativa.cs" Line="45" Column="23" />
-      <File FileName="Assets\Scripts\BaseDatos\Recurso.cs" Line="19" Column="1" />
+      <File FileName="Assets\Scripts\Selection\Seleccionable.cs" Line="146" Column="8" />
+      <File FileName="Assets\Scripts\Pathfinding\Obstacle.cs" Line="28" Column="19" />
+      <File FileName="Assets\Scripts\BaseDatos\BaseDatos.cs" Line="42" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

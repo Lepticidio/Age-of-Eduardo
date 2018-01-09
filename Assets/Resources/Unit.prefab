@@ -56,10 +56,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selected: 0
   ocupado: 0
+  recolectando: 0
   myCamera: {fileID: 0}
   nombre: Citizen
   baseDatos: {fileID: 0}
   altura: 0
+  jugador: {fileID: 0}
 --- !u!114 &114700092208380204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -78,6 +80,7 @@ MonoBehaviour:
   destiny: {x: 0, y: 0, z: 0}
   myCamera: {fileID: 0}
   control: {fileID: 0}
+  marcador: {fileID: 1075565882571736, guid: 9d031512810b4fb4cba6c5cf17b5eedb, type: 2}
 --- !u!120 &120294505245294210
 LineRenderer:
   m_ObjectHideFlags: 1

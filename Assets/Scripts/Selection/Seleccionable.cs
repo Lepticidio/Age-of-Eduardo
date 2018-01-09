@@ -57,6 +57,7 @@ public class Seleccionable : MonoBehaviour {
 			control.puntero = null;
 		}
 		if (Input.GetMouseButtonUp (0)&& selection.IsWithinSelectionBounds(gameObject)&& objeto.type ==1) {
+			Debug.Log ("Es seleccionado");
 			Seleccion ();
 		}
 		if (Input.GetMouseButtonDown (0)&& Input.mousePosition.y > myCamera.pixelHeight*interfaz.interfaceFraction) {

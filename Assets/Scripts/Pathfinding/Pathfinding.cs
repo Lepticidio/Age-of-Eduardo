@@ -13,6 +13,7 @@ public class Pathfinding : MonoBehaviour {
 	public Nodo[,] grid;
 	public Control control;
 	public List<Nodo> currentPath = new List<Nodo>();
+	public GameObject marcador;
 	//bool controlable = true;
 
 
@@ -77,12 +78,28 @@ public class Pathfinding : MonoBehaviour {
 		} else {
 			if ( contaPuntos< currentPath.Count-1) {
 				contaPuntos++;
-				targetPosition = GetPosition (currentPath [contaPuntos]);
 
+				Nodo anterior = control.grid [currentPath [contaPuntos-1].x, currentPath [contaPuntos-1].y];
+				Nodo siguiente = control.grid [currentPath [contaPuntos].x, currentPath [contaPuntos].y];
+
+				if (!siguiente.bloqueado) {			
+					targetPosition = GetPosition (currentPath [contaPuntos]);
+					anterior.bloqueado = false;
+					siguiente.bloqueado = true;
+				} else {
+					pathfinding ();
+				}
 			}
 			else if(contaPuntos== currentPath.Count-1){
-
-				targetPosition = GetPosition (GetNodo (destiny));
+				Nodo destination = control.grid [GetNodo(destiny).x, GetNodo(destiny).y];
+				Nodo anterior = control.grid [currentPath [contaPuntos].x, currentPath [contaPuntos].y];
+				if(!destination.bloqueado){	
+					targetPosition = GetPosition (destination);
+					anterior.bloqueado = false;
+					destination.bloqueado = true;
+				}else{
+					
+				}
 			}
 		}
 
@@ -247,6 +264,5 @@ public class Pathfinding : MonoBehaviour {
 			AddToPath (hijo.parent, ref path);
 		}
 	}
-
 
 }

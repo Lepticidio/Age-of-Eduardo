@@ -23,6 +23,7 @@ public class Creativa : Habilidad {
 				Projection projection = MonoBehaviour.Instantiate (projectionGO).GetComponent<Projection> ();
 				projection.edificio = projection.control.gameObject.GetComponent<BaseDatos> ().searchObject ("Town Center") as Edificio;
 				projection.selec = selec;
+				projection.creativa = this;
 				selec.ocupado = true;
 				projection.Actualizar ();
 			} else if (nombre [0] == "Create Citizen") {
@@ -33,9 +34,6 @@ public class Creativa : Habilidad {
 				}
 			}
 
-			for (int i = 0; i < recursos.Count; i++) {
-				selec.jugador.recursos [recursos [i].ID] -= amounts [i];
-			}
 		}
 	}
 	public bool RecursosRequeridos(Jugador jug){
@@ -46,5 +44,10 @@ public class Creativa : Habilidad {
 			}
 		}
 		return resultado;
+	}
+	public void GastarRecursos(Seleccionable selec){
+		for (int i = 0; i < recursos.Count; i++) {
+			selec.jugador.recursos [recursos [i].ID] -= amounts [i];
+		}
 	}
 }

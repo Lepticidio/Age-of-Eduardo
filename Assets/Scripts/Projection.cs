@@ -11,6 +11,7 @@ public class Projection : MonoBehaviour {
 	public Control control;
 	public GameObject edificioGO;
 	public Seleccionable selec;
+	public Creativa creativa;
 
 	void Awake(){
 		control = GameObject.Find ("Controlador").GetComponent<Control> ();
@@ -27,9 +28,10 @@ public class Projection : MonoBehaviour {
 
 		if (posible && !CheckPosition ()) {
 			mostrarImposible ();
-		}
-		else if(!posible && CheckPosition ()){
+		} else if (!posible && CheckPosition ()) {
 			mostrarPosible ();
+		} else if (!posible && !CheckPosition ()) {
+			mostrarImposible ();
 		}
 
 		if(Input.GetMouseButtonUp(0)||Input.GetKey(KeyCode.Escape)){
@@ -37,10 +39,11 @@ public class Projection : MonoBehaviour {
 			Destroy(gameObject);
 		}
 
-		if(Input.GetMouseButtonUp(1)){
+		if(Input.GetMouseButtonUp(1)&&posible){
 			selec.ocupado = false;
 			GameObject edi = Instantiate (control.edificio, transform.position,Quaternion.identity);
 			edi.GetComponent<Obstacle> ().objeto = edificio;
+			creativa.GastarRecursos (selec);
 			Destroy(gameObject);
 		}
 

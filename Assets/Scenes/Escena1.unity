@@ -546,6 +546,7 @@ MonoBehaviour:
   ancho: 144
   alto: 80
   puntero: {fileID: 0}
+  jugador: {fileID: 102685999}
   jugadores: []
   edificio: {fileID: 1928395821778524, guid: c558149471f0269489ce66a5614dfceb, type: 2}
 --- !u!4 &203514161
@@ -583,6 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200b1fb07d9737c48b8f1784e5463b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spritesTown: []
 --- !u!114 &203514164
 MonoBehaviour:
   m_ObjectHideFlags: 0

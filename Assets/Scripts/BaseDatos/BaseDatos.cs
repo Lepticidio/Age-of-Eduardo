@@ -7,8 +7,8 @@ public class BaseDatos: MonoBehaviour {
 	public List <Recurso> recursos = new List<Recurso> ();
 	public List<Habilidad> habilidades = new List<Habilidad>();
 	public List<Objeto> objetos = new List<Objeto>();
+	public List<Sprite> spritesTown = new List<Sprite>();
 	void Awake () {
-
 
 		Recurso Food= new Recurso ("Food", 0);
 		recursos.Add (Food);
@@ -17,6 +17,11 @@ public class BaseDatos: MonoBehaviour {
 		Recurso Wood= new Recurso ("Wood", 1);
 		recursos.Add (Wood);
 		Wood.nombre[1] = "Madera";
+
+		Activa Build = new Activa ("Build");
+		habilidades.Add (Build);
+		Build.nombre [1] = "Construir";
+		Build.value = 0.02f;
 
 		Recoleccion Foraging = new Recoleccion ("Foraging", Food);
 		habilidades.Add (Foraging);
@@ -56,21 +61,23 @@ public class BaseDatos: MonoBehaviour {
 		Citizen.size = 2;
 		Citizen.alto = 4;
 		Citizen.ancho = 2;
-		Citizen.recolecciones.Add (searchHabilidad ("Foraging") as Recoleccion);
-		Citizen.recolecciones.Add (searchHabilidad ("Wood Cutting") as Recoleccion);
+		Citizen.recolecciones.Add (Foraging);
+		Citizen.recolecciones.Add (WoodCutting);
+		Citizen.activas.Add (Build);
 
-		Edificio TownCenter = new Edificio ("Town Center");
+		Edificio TownCenter = new Edificio ("Town Center", 5);
 		objetos.Add (TownCenter);
 		TownCenter.size = 7;
 		TownCenter.alto = 14;
 		TownCenter.ancho = 14;
+		TownCenter.productionTime = 50;
 		TownCenter.nombre[1] = "Centro Urbano";
 
-		Creativa Build = new Creativa ("Build", TownCenter);
-		habilidades.Add (Build);
-		Build.nombre[1] = "Construir";
-		Build.recursos.Add (Wood);
-		Build.amounts.Add (50);
+		Creativa BuildTownCenter = new Creativa ("Build Town Center", TownCenter);
+		habilidades.Add (BuildTownCenter);
+		BuildTownCenter.nombre[1] = "Construir Centro Urbano";
+		BuildTownCenter.recursos.Add (Wood);
+		BuildTownCenter.amounts.Add (50);
 
 		Creativa CreateCitizen = new Creativa ("Create Citizen", Citizen);
 		habilidades.Add (CreateCitizen);
@@ -78,8 +85,8 @@ public class BaseDatos: MonoBehaviour {
 		CreateCitizen.recursos.Add (Food);
 		CreateCitizen.amounts.Add (50);
 
-		Citizen.creativas.Add (searchHabilidad ("Build") as Creativa);
-		TownCenter.creativas.Add (searchHabilidad ("Create Citizen") as Creativa);
+		Citizen.creativas.Add (BuildTownCenter);
+		TownCenter.creativas.Add (CreateCitizen);
 	}
 
 	public Objeto searchObject (string nombre){

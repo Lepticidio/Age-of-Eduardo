@@ -8,7 +8,7 @@ public class Control : MonoBehaviour {
 	public int ancho, alto;
 	public Nodo[,] grid;
 	public Seleccionable puntero;
-
+	public Jugador jugador;
 	public List<Jugador> jugadores = new List<Jugador>();
 
 	public GameObject edificio;
@@ -28,6 +28,10 @@ public class Control : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Input.GetKeyDown (KeyCode.X)) {
+			for (int i = 0; i< jugador.recursos.Count; i++) {
+				jugador.recursos[i] += 10000;
+			}
+		}
 	}
 }

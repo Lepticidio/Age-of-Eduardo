@@ -19,7 +19,7 @@ public class Creativa : Habilidad {
 	}
 	public void Action(Seleccionable selec){
 		if (RecursosRequeridos (selec.jugador)) {
-			if (nombre [0] == "Build") {
+			if (nombre [0] == "Build Town Center") {
 				Projection projection = MonoBehaviour.Instantiate (projectionGO).GetComponent<Projection> ();
 				projection.edificio = projection.control.gameObject.GetComponent<BaseDatos> ().searchObject ("Town Center") as Edificio;
 				projection.selec = selec;

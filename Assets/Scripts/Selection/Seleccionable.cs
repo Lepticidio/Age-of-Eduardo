@@ -4,15 +4,9 @@ using UnityEngine;
 using MyPathfinding;
 
 public class Seleccionable : MonoBehaviour {
-
-	/*
-	 * CHARLA SERIA:
-	 * Los ciudadanos no van a donde deberían cuando recogen recursos. 
-	 * NearestFronterizo probablemente no funciona.
-	 * */
-
-
-	public bool selected, ocupado, recolectando;
+	
+	public bool selected, ocupado, recolectando, construyendo, construido = true, creando;
+	public float buildAmount, maxBuildAmount, productionAmount;
 	public Camera myCamera;
 	public string nombre;
 	public Objeto objeto;
@@ -23,7 +17,7 @@ public class Seleccionable : MonoBehaviour {
 	Pathfinding pathfinding;
 	Control control;
 	public List<Nodo> fronterizos = new List<Nodo>();
-	Seleccionable fuente;
+	Seleccionable fuente, cimientos;
 
 	public float altura;
 
@@ -57,7 +51,6 @@ public class Seleccionable : MonoBehaviour {
 			control.puntero = null;
 		}
 		if (Input.GetMouseButtonUp (0)&& selection.IsWithinSelectionBounds(gameObject)&& objeto.type ==1) {
-			Debug.Log ("Es seleccionado");
 			Seleccion ();
 		}
 		if (Input.GetMouseButtonDown (0)&& Input.mousePosition.y > myCamera.pixelHeight*interfaz.interfaceFraction) {
@@ -70,28 +63,52 @@ public class Seleccionable : MonoBehaviour {
 			}
 		}
 		if (selected) {
-			if (Input.GetMouseButtonDown (1)&&objeto.type == 1 &&  !ocupado) {
-				if (control.puntero!= null&& control.puntero.objeto.type == 4&& objeto.recolecciones.Contains( (control.puntero.objeto as FuenteRecurso).recoleccion)) {
-					fuente = control.puntero;
-					fuente.GetFronterizos ();
-					if (fuente.fronterizos.Count > 0) {
-						Nodo des = fuente.NearestFronterizo (transform.position);
-						pathfinding.destiny = new Vector3 (des.x, des.y,0);
-						pathfinding.pathfinding ();
-						recolectando = true;
-					}
-				} else {
-					pathfinding.destiny = myCamera.ScreenToWorldPoint (Input.mousePosition);
-					pathfinding.pathfinding ();
-					recolectando = false;
-				}
+			if (Input.GetMouseButtonDown (1) && objeto.type == 1 ) {
+				Destinar ();
+			}
+
+		}
+		if (recolectando && Vector3.Distance (fuente.transform.position, transform.position) < fuente.objeto.size*2) {
+			(fuente.objeto as FuenteRecurso).recoleccion.Action (this);
+		}
+		if (construyendo && Vector3.Distance (cimientos.transform.position, transform.position) < cimientos.objeto.size*2) {
+			if (!cimientos.construido) {
+				Activa activa = baseDatos.searchHabilidad ("Build") as Activa;
+				activa.Action (cimientos);
+			} else {
+				construyendo = false;
 			}
 		}
-		if (recolectando && Vector3.Distance (fuente.transform.position, transform.position) < 4) {
-			(fuente.objeto as FuenteRecurso).recoleccion.Action(this);
-		}
-
 	}
+
+	public void Destinar(){
+		
+		if (control.puntero!= null&& control.puntero.objeto.type == 4&& objeto.recolecciones.Contains( (control.puntero.objeto as FuenteRecurso).recoleccion)&& !ocupado) {
+			fuente = control.puntero;
+			fuente.GetFronterizos ();
+			if (fuente.fronterizos.Count > 0) {
+				Nodo des = fuente.NearestFronterizo (transform.position);
+				pathfinding.destiny = new Vector3 (des.x, des.y,0);
+				pathfinding.pathfinding ();
+				recolectando = true;
+			}
+		}else if (control.puntero!= null&& control.puntero.objeto.type == 2&& objeto.creativas.Contains( baseDatos.searchHabilidad("Build Town Center") as Creativa)) {
+			cimientos = control.puntero;
+			cimientos.GetFronterizos ();
+			if (cimientos.fronterizos.Count > 0) {
+				Nodo des = cimientos.NearestFronterizo (transform.position);
+				pathfinding.destiny = new Vector3 (des.x, des.y,0);
+				pathfinding.pathfinding ();
+				construyendo = true;
+			}
+		} else if(!ocupado) {
+			pathfinding.destiny = myCamera.ScreenToWorldPoint (Input.mousePosition);
+			pathfinding.pathfinding ();
+			recolectando = false;
+			construyendo = false;
+		}
+	}
+
 
 	void Seleccion(){
 		

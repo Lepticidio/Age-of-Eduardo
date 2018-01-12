@@ -43,7 +43,13 @@ public class Projection : MonoBehaviour {
 			selec.ocupado = false;
 			GameObject edi = Instantiate (control.edificio, transform.position,Quaternion.identity);
 			edi.GetComponent<Obstacle> ().objeto = edificio;
+			Seleccionable sel = edi.GetComponent<Seleccionable> ();
+			sel.objeto = edificio;
+			sel.maxBuildAmount = edificio.productionTime;
+			sel.construido = false;
+			sel.GetComponent<SpriteRenderer> ().sprite = edificio.sprites [1];
 			creativa.GastarRecursos (selec);
+			selec.Invoke ("Destinar", 0.05f);
 			Destroy(gameObject);
 		}
 
@@ -76,6 +82,6 @@ public class Projection : MonoBehaviour {
 	}
 
 	public void Actualizar (){
-		sr.sprite = edificio.sprite;
+		sr.sprite = edificio.sprites[0];
 	}
 }

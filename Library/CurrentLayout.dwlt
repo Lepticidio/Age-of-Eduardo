@@ -158,7 +158,7 @@ MonoBehaviour:
   m_MinSize: {x: 583, y: 342}
   m_MaxSize: {x: 12008, y: 8042}
   vertical: 0
-  controlID: 47
+  controlID: 102
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -290,14 +290,14 @@ MonoBehaviour:
     width: 952
     height: 479
   m_SceneLighting: 1
-  lastFramingTime: 0
+  lastFramingTime: 1980.6435297905584
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 34.089966, y: 28.024277, z: -0.27365446}
+    m_Target: {x: 46.17632, y: 15.225822, z: -0.5625}
     speed: 2
-    m_Value: {x: 34.089966, y: 28.024277, z: -0.27365446}
+    m_Value: {x: 46.17632, y: 15.225822, z: -0.5625}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -324,9 +324,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 36.968628
+    m_Target: 64.32482
     speed: 2
-    m_Value: 36.968628
+    m_Value: 64.32482
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -550,10 +550,10 @@ MonoBehaviour:
     width: 298
     height: 479
   m_TreeViewState:
-    scrollPos: {x: 0, y: 82}
-    m_SelectedIDs: 88280000
-    m_LastClickedID: 10376
-    m_ExpandedIDs: a6fbffff0000000074280000
+    scrollPos: {x: 0, y: 370}
+    m_SelectedIDs: 6c280000
+    m_LastClickedID: 10348
+    m_ExpandedIDs: 02f9fcffa6fbffff0000000074280000b0280000c6280000ce280000f4280000002900001c29000030290000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -679,24 +679,24 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 88280000
-    m_LastClickedInstanceID: 10376
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 9430fdff
+    m_LastClickedInstanceID: -184172
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 6e0500001c2400002e240000342400004024000036240000f4440000000000006cb0fbfffc11f9ff1821f3ff7c7ff1ff38290000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Scripts
+      m_OriginalName: Scripts
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 10112
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_CreateAssetUtility:

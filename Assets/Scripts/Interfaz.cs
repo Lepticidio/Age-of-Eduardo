@@ -9,7 +9,7 @@ public class Interfaz : MonoBehaviour {
 	public bool cleared = true;
 	public int language;
 	public float sizeButtonX, sizeButtonY, margenX, margenY, sizePanRecursoX, sizePanRecursoY, margenXRecurso, margenYRecurso, interfaceFraction;
-	public Image icon;
+	public Image icon, healthBar;
 	public Text nombre;
 	public Transform PanelHabilidades, PanelRecursos;
 	public GameObject genPanRecurso;
@@ -19,14 +19,13 @@ public class Interfaz : MonoBehaviour {
 	public BaseDatos baseDatos;
 	public List<Text> textosRecursos = new List<Text>();
 
+
 	/* 
 	 * CHARLA SERIA: 
 	 * Para la selección múltiple tengo que ordenar los selecs por "prioridad".
 	 * Esta será mayor en unidades especiales con habilidades, como ciudadanos,
 	 * y entre las unidades normales cuanto más fuerte sea más "prioridad".	 * 
 	 * 
-	 * También tengo que reestructurar la interfaz, y que las habilidades ocupen el hueco
-	 * iferior derecho. (?)
 	 *
 	 * */
 
@@ -43,6 +42,9 @@ public class Interfaz : MonoBehaviour {
 		ActualizarRecursos ();
 		if (!cleared && selecs.Count == 0) {
 			ClearButtons ();
+		}
+		if (selecs.Count > 0) {
+			UpdateHealth ();
 		}
 	}
 
@@ -144,6 +146,12 @@ public class Interfaz : MonoBehaviour {
 	void ActualizarRecursos(){
 		for (int i = 0; i< textosRecursos.Count; i++) {
 			textosRecursos[i].text = ((int)jugador.recursos[i]).ToString();
+		}
+	}
+	void UpdateHealth(){
+		if (selecs [0].objeto.type == 1 || selecs [0].objeto.type == 2) {
+			healthBar.rectTransform.anchorMax = new Vector2( selecs [0].health / (selecs [0].objeto as Ficha).health,healthBar.rectTransform.anchorMax.y);
+			healthBar.rectTransform.offsetMax = new Vector2 (0, 0);
 		}
 	}
 }

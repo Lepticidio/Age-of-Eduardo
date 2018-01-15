@@ -57,7 +57,7 @@ public class BaseDatos: MonoBehaviour {
 
 		Unidad Citizen = new Unidad ("Citizen");
 		objetos.Add (Citizen);
-		Citizen.nombre[1] = "Ciudadano";
+		Citizen.health = 50;
 		Citizen.size = 2;
 		Citizen.alto = 4;
 		Citizen.ancho = 2;
@@ -65,9 +65,11 @@ public class BaseDatos: MonoBehaviour {
 		Citizen.recolecciones.Add (Foraging);
 		Citizen.recolecciones.Add (WoodCutting);
 		Citizen.activas.Add (Build);
+		Citizen.nombre[1] = "Ciudadano";
 
 		Edificio TownCenter = new Edificio ("Town Center", 5);
 		objetos.Add (TownCenter);
+		TownCenter.health = 500;
 		TownCenter.size = 7;
 		TownCenter.alto = 14;
 		TownCenter.ancho = 14;

@@ -6,19 +6,19 @@ using MyPathfinding;
 public class Seleccionable : MonoBehaviour {
 	
 	public bool selected, ocupado, recolectando, construyendo, construido = true;
-	public float buildAmount, maxBuildAmount, productionAmount, maxProductionAmount;
-	public Camera myCamera;
+	public float health, buildAmount, maxBuildAmount, productionAmount, maxProductionAmount;
 	public string nombre;
-	public Objeto objeto;
-	public List<Creativa> productionQueue = new List<Creativa> ();
-	Selection selection;
-	public BaseDatos baseDatos;
-	Interfaz interfaz;
+	public Camera myCamera;
 	GameObject botonDefecto, marcador;
+	public Objeto objeto;
+	public BaseDatos baseDatos;
+	Selection selection;
+	Interfaz interfaz;
 	Pathfinding pathfinding;
 	Control control;
-	public List<Nodo> fronterizos = new List<Nodo>();
 	Seleccionable fuente, cimientos;
+	public List<Nodo> fronterizos = new List<Nodo>();
+	public List<Creativa> productionQueue = new List<Creativa> ();
 
 	public float altura;
 
@@ -52,15 +52,17 @@ public class Seleccionable : MonoBehaviour {
 	void Start(){
 		objeto = baseDatos.searchObject (nombre);
 		altura = objeto.alto;
-		if (objeto.type == 1) {
-			pathfinding = gameObject.GetComponent<Pathfinding> ();
-			for (int i =1 + (int)(transform.position.x - objeto.ancho / 2); i < 1+(int)(transform.position.x + objeto.ancho / 2); i++) {
-				for (int j = 1+(int)(transform.position.y - objeto.alto / 2); j < 1+(int)(transform.position.y + objeto.alto / 2); j++) {
-					control.grid [i, j].bloqueado = true;
+		if (objeto.type == 1 || objeto.type == 2) {
+			health = (objeto as Ficha).health;
+			if (objeto.type == 1) {
+				pathfinding = gameObject.GetComponent<Pathfinding> ();
+				for (int i = 1 + (int)(transform.position.x - objeto.ancho / 2); i < 1 + (int)(transform.position.x + objeto.ancho / 2); i++) {
+					for (int j = 1 + (int)(transform.position.y - objeto.alto / 2); j < 1 + (int)(transform.position.y + objeto.alto / 2); j++) {
+						control.grid [i, j].bloqueado = true;
+					}
 				}
 			}
 		}
-
 	}
 
 	void Update(){

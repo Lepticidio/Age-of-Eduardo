@@ -8,17 +8,18 @@ public class Interfaz : MonoBehaviour {
 	bool iniciada;
 	public bool cleared = true;
 	public int language;
-	public float sizeButtonX, sizeButtonY, margenX, margenY, sizePanRecursoX, sizePanRecursoY, margenXRecurso, margenYRecurso, interfaceFraction;
+	public float interfaceFraction, sizeButtonX, sizeButtonY, margenX, margenY, sizePanRecursoX, sizePanRecursoY, margenXRecurso, margenYRecurso, 
+		sizePanSelectionX, sizePanSelectionY, margenXSelection, margenYSelection;
 	public Image icon, healthBar;
 	public Text nombre;
-	public Transform PanelHabilidades, PanelRecursos;
-	public GameObject genPanRecurso;
+	public Transform PanelHabilidades, PanelRecursos, PanelSelections;
+	public GameObject genPanRecurso, genPanSelection;
 	public Button DefaultButton;
 	public List<Seleccionable> selecs = new List<Seleccionable>();
 	public Jugador jugador;
 	public BaseDatos baseDatos;
 	public List<Text> textosRecursos = new List<Text>();
-
+	public List<Image> healthBars = new List<Image>();
 
 	/* 
 	 * CHARLA SERIA: 
@@ -44,7 +45,7 @@ public class Interfaz : MonoBehaviour {
 			ClearButtons ();
 		}
 		if (selecs.Count > 0) {
-			UpdateHealth ();
+			UpdateHealthBars ();
 		}
 	}
 
@@ -52,7 +53,6 @@ public class Interfaz : MonoBehaviour {
 
 
 	public void CreateHabilityButtons(){
-		ClearButtons ();
 		nombre.text = selecs[0].objeto.nombre[language];
 		icon.sprite = selecs[0].objeto.icono;
 		float xMax = sizeButtonX;
@@ -135,6 +135,36 @@ public class Interfaz : MonoBehaviour {
 			textosRecursos.Add (textoRecurso);
 		}
 	}
+	public void CreateSelectionPanels(){
+		ClearButtons ();
+		healthBars.Clear ();
+		if (selecs.Count > 0) {
+			float xMax = sizePanSelectionX;
+			float xMin = margenXSelection;
+			float yMax = margenYSelection;
+			float yMin = margenYSelection - sizePanSelectionY;
+			for (int i = 0; i < selecs.Count; i++) {
+				GameObject panSelection = Instantiate (genPanSelection, PanelSelections);
+				RectTransform rtrans = panSelection.transform as RectTransform;
+				Objeto objeto = selecs [i].objeto;
+				rtrans.anchorMax = new Vector2 (xMax, yMax);
+				rtrans.anchorMin = new Vector2 (xMin, yMin);
+				rtrans.offsetMax = new Vector2 (0, 0);
+				rtrans.offsetMin = new Vector2 (0, 0);
+				xMax += sizePanSelectionX;
+				xMin += sizePanSelectionX;
+				if (xMax > 1) {
+					xMax = sizePanSelectionX;
+					xMin = margenXSelection;
+					yMax -= sizePanSelectionY;
+					yMin -= sizePanSelectionY;
+
+				}
+				panSelection.GetComponentsInChildren<Image> () [1].sprite = objeto.icono;
+				healthBars.Add (rtrans.GetChild (1).GetChild (1).GetComponent<Image>());
+			}
+		}
+	}
 	public void ClearButtons(){
 		nombre.text = "";
 		icon.sprite = null;
@@ -148,10 +178,16 @@ public class Interfaz : MonoBehaviour {
 			textosRecursos[i].text = ((int)jugador.recursos[i]).ToString();
 		}
 	}
-	void UpdateHealth(){
+	void UpdateHealthBar(Image image ,Seleccionable sel){
 		if (selecs [0].objeto.type == 1 || selecs [0].objeto.type == 2) {
-			healthBar.rectTransform.anchorMax = new Vector2( selecs [0].health / (selecs [0].objeto as Ficha).health,healthBar.rectTransform.anchorMax.y);
-			healthBar.rectTransform.offsetMax = new Vector2 (0, 0);
+			image.rectTransform.anchorMax = new Vector2( sel.health / (sel.objeto as Ficha).health,image.rectTransform.anchorMax.y);
+			image.rectTransform.offsetMax = new Vector2 (0, 0);
+		}
+	}
+	void UpdateHealthBars(){
+		UpdateHealthBar (healthBar, selecs[0]);
+		for (int i = 0; i < healthBars.Count; i++) {
+			UpdateHealthBar (healthBars [i], selecs [i]);
 		}
 	}
 }

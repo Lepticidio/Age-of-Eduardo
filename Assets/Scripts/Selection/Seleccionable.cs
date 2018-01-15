@@ -151,6 +151,7 @@ public class Seleccionable : MonoBehaviour {
 		selected = true;
 		DrawCircle(objeto.size, 128, Color.red);
 		interfaz.selecs.Add(this);
+		interfaz.Invoke ("CreateSelectionPanels", 0.04f);
 		interfaz.Invoke ("CreateHabilityButtons", 0.05f);
 
 	}

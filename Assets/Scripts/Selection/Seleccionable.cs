@@ -5,11 +5,12 @@ using MyPathfinding;
 
 public class Seleccionable : MonoBehaviour {
 	
-	public bool selected, ocupado, recolectando, construyendo, construido = true, creando;
-	public float buildAmount, maxBuildAmount, productionAmount;
+	public bool selected, ocupado, recolectando, construyendo, construido = true;
+	public float buildAmount, maxBuildAmount, productionAmount, maxProductionAmount;
 	public Camera myCamera;
 	public string nombre;
 	public Objeto objeto;
+	public List<Creativa> productionQueue = new List<Creativa> ();
 	Selection selection;
 	public BaseDatos baseDatos;
 	Interfaz interfaz;
@@ -36,10 +37,15 @@ public class Seleccionable : MonoBehaviour {
 
 	void Start(){
 		objeto = baseDatos.searchObject (nombre);
+		altura = objeto.alto;
 		if (objeto.type == 1) {
 			pathfinding = gameObject.GetComponent<Pathfinding> ();
+			for (int i =1 + (int)(transform.position.x - objeto.ancho / 2); i < 1+(int)(transform.position.x + objeto.ancho / 2); i++) {
+				for (int j = 1+(int)(transform.position.y - objeto.alto / 2); j < 1+(int)(transform.position.y + objeto.alto / 2); j++) {
+					control.grid [i, j].bloqueado = true;
+				}
+			}
 		}
-		altura = objeto.alto;
 
 	}
 
@@ -67,6 +73,9 @@ public class Seleccionable : MonoBehaviour {
 				Destinar ();
 			}
 
+		}
+		if (productionQueue.Count>0) {
+			productionQueue [0].Work (this);
 		}
 		if (recolectando && Vector3.Distance (fuente.transform.position, transform.position) < fuente.objeto.size*2) {
 			(fuente.objeto as FuenteRecurso).recoleccion.Action (this);

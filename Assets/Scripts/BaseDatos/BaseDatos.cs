@@ -61,6 +61,7 @@ public class BaseDatos: MonoBehaviour {
 		Citizen.size = 2;
 		Citizen.alto = 4;
 		Citizen.ancho = 2;
+		Citizen.productionTime = 12;
 		Citizen.recolecciones.Add (Foraging);
 		Citizen.recolecciones.Add (WoodCutting);
 		Citizen.activas.Add (Build);
@@ -71,7 +72,9 @@ public class BaseDatos: MonoBehaviour {
 		TownCenter.alto = 14;
 		TownCenter.ancho = 14;
 		TownCenter.productionTime = 50;
+		TownCenter.productionRate = 0.02f;
 		TownCenter.nombre[1] = "Centro Urbano";
+
 
 		Creativa BuildTownCenter = new Creativa ("Build Town Center", TownCenter);
 		habilidades.Add (BuildTownCenter);

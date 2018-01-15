@@ -26,7 +26,7 @@ public class Interfaz : MonoBehaviour {
 	 * y entre las unidades normales cuanto más fuerte sea más "prioridad".	 * 
 	 * 
 	 * También tengo que reestructurar la interfaz, y que las habilidades ocupen el hueco
-	 * iferior derecho.
+	 * iferior derecho. (?)
 	 *
 	 * */
 

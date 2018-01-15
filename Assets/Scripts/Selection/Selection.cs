@@ -5,7 +5,7 @@ using UnityEngine;
 public class Selection : MonoBehaviour {
 
 
-	bool isSelecting = false;
+	public bool isSelecting = false;
 	Vector3 mousePosition1;
 
 	void Update()
@@ -31,13 +31,13 @@ public class Selection : MonoBehaviour {
 	}
 	public bool IsWithinSelectionBounds( GameObject gameObject )
 	{
-		if (!isSelecting)
-			return false;
-
 		var camera = Camera.main;
 		var viewportBounds = Utils.GetViewportBounds (camera, mousePosition1, Input.mousePosition);
-
+		if (viewportBounds.Contains (camera.WorldToViewportPoint (gameObject.transform.position))) {
+			Debug.Log ("Lo contiene");
+		}
 		return viewportBounds.Contains (camera.WorldToViewportPoint (gameObject.transform.position));
+
 	}
 }
 

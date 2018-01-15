@@ -24,10 +24,12 @@ public class Creativa : Habilidad {
 				projection.edificio = objeto as Edificio;
 				projection.selec = selec;
 				projection.creativa = this;
+				projection.jugador = selec.jugador;
 				selec.ocupado = true;
 				projection.Actualizar ();
 			} else if (nombre [0] == "Create Citizen") {
 				selec.productionQueue.Add (this);
+				GastarRecursos (selec);
 				if (selec.productionQueue.Count == 1) {
 					selec.maxProductionAmount = (objeto as Ficha).productionTime;
 				}

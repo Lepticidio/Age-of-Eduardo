@@ -61,7 +61,7 @@ public class BaseDatos: MonoBehaviour {
 		Citizen.size = 2;
 		Citizen.alto = 4;
 		Citizen.ancho = 2;
-		Citizen.productionTime = 12;
+		Citizen.productionTime = 2;
 		Citizen.recolecciones.Add (Foraging);
 		Citizen.recolecciones.Add (WoodCutting);
 		Citizen.activas.Add (Build);

@@ -12,6 +12,7 @@ public class Projection : MonoBehaviour {
 	public GameObject edificioGO;
 	public Seleccionable selec;
 	public Creativa creativa;
+	public Jugador jugador;
 
 	void Awake(){
 		control = GameObject.Find ("Controlador").GetComponent<Control> ();
@@ -47,6 +48,7 @@ public class Projection : MonoBehaviour {
 			sel.objeto = edificio;
 			sel.maxBuildAmount = edificio.productionTime;
 			sel.construido = false;
+			sel.jugador = jugador;
 			sel.GetComponent<SpriteRenderer> ().sprite = edificio.sprites [1];
 			creativa.GastarRecursos (selec);
 			selec.Invoke ("Destinar", 0.05f);

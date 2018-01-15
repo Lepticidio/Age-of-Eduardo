@@ -24,6 +24,20 @@ public class Seleccionable : MonoBehaviour {
 
 	public Jugador jugador;
 
+
+
+	/* 
+	 * CHARLA SERIA:
+	 * Los ciudadanos creados en el lado derecho del centro urbano no se mueven
+	 * por alguna razón desconocida.
+	 * 
+	 * 
+	 * 
+	 * */
+
+
+
+
 	// Use this for initialization
 	void Awake () {
 		
@@ -56,7 +70,18 @@ public class Seleccionable : MonoBehaviour {
 		} else if (control.puntero == this) {
 			control.puntero = null;
 		}
+		if(Input.GetMouseButtonUp (0)){
+			Debug.Log ("Pulso ratón");
+			if( selection.IsWithinSelectionBounds(gameObject)){
+				Debug.Log ("Esta en los límites");
+				if(objeto.type ==1){
+					Debug.Log ("Es una unidad");
+
+				}
+			}
+		}
 		if (Input.GetMouseButtonUp (0)&& selection.IsWithinSelectionBounds(gameObject)&& objeto.type ==1) {
+			Debug.Log ("Se seleccionan");
 			Seleccion ();
 		}
 		if (Input.GetMouseButtonDown (0)&& Input.mousePosition.y > myCamera.pixelHeight*interfaz.interfaceFraction) {

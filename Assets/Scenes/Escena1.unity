@@ -599,7 +599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cleared: 1
   language: 1
-  interfaceFraction: 0.3
+  interfaceFraction: 0.25
   sizeButtonX: 0.25
   sizeButtonY: 0.25
   margenX: 0.05
@@ -620,7 +620,7 @@ MonoBehaviour:
   PanelSelections: {fileID: 92835468}
   genPanRecurso: {fileID: 1213672853827464, guid: b45cbfeb3f3e03548a0711bc42d65fd0,
     type: 2}
-  genPanSelection: {fileID: 1366743982940526, guid: 632e2f939748fd94b8fb3c4108c7b0d0,
+  genPanSelection: {fileID: 1134531666981686, guid: 632e2f939748fd94b8fb3c4108c7b0d0,
     type: 2}
   DefaultButton: {fileID: 114087481625965600, guid: 14b1d4632ce6b8b43a2bb2a776ad6d2c,
     type: 2}
@@ -628,6 +628,7 @@ MonoBehaviour:
   jugador: {fileID: 102685999}
   baseDatos: {fileID: 0}
   textosRecursos: []
+  healthBars: []
 --- !u!114 &203514165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -774,7 +775,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.08441667, y: 0.8578889}
   m_AnchorMax: {x: 0.91558343, y: 0.97}
-  m_AnchoredPosition: {x: 0, y: -0.29999995}
+  m_AnchoredPosition: {x: 0, y: -0.30000305}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &325653330

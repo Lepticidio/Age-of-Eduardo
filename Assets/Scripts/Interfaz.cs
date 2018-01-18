@@ -144,9 +144,10 @@ public class Interfaz : MonoBehaviour {
 			float yMax = margenYSelection;
 			float yMin = margenYSelection - sizePanSelectionY;
 			for (int i = 0; i < selecs.Count; i++) {
+				Seleccionable sel = selecs [i];
 				GameObject panSelection = Instantiate (genPanSelection, PanelSelections);
 				RectTransform rtrans = panSelection.transform as RectTransform;
-				Objeto objeto = selecs [i].objeto;
+				Objeto objeto = sel.objeto;
 				rtrans.anchorMax = new Vector2 (xMax, yMax);
 				rtrans.anchorMin = new Vector2 (xMin, yMin);
 				rtrans.offsetMax = new Vector2 (0, 0);
@@ -162,6 +163,10 @@ public class Interfaz : MonoBehaviour {
 				}
 				panSelection.GetComponentsInChildren<Image> () [1].sprite = objeto.icono;
 				healthBars.Add (rtrans.GetChild (1).GetChild (1).GetComponent<Image>());
+				panSelection.GetComponentInChildren<Button> ().name = "botoncillo";
+				panSelection.GetComponentInChildren<Button> ().onClick.AddListener(delegate {
+					ChangeMainSelection(sel);
+				});
 			}
 		}
 	}
@@ -179,15 +184,33 @@ public class Interfaz : MonoBehaviour {
 		}
 	}
 	void UpdateHealthBar(Image image ,Seleccionable sel){
-		if (selecs [0].objeto.type == 1 || selecs [0].objeto.type == 2) {
-			image.rectTransform.anchorMax = new Vector2( sel.health / (sel.objeto as Ficha).health,image.rectTransform.anchorMax.y);
-			image.rectTransform.offsetMax = new Vector2 (0, 0);
+		if (image != null) {
+			if (selecs [0].objeto.type == 1 || selecs [0].objeto.type == 2) {
+				image.rectTransform.anchorMax = new Vector2 (sel.health / (sel.objeto as Ficha).health, image.rectTransform.anchorMax.y);
+				image.rectTransform.offsetMax = new Vector2 (0, 0);
+			}
 		}
 	}
 	void UpdateHealthBars(){
 		UpdateHealthBar (healthBar, selecs[0]);
-		for (int i = 0; i < healthBars.Count; i++) {
-			UpdateHealthBar (healthBars [i], selecs [i]);
+		if (selecs.Count== healthBars.Count) {
+			for (int i = 0; i < healthBars.Count; i++) {
+				UpdateHealthBar (healthBars [i], selecs [i]);
+			}
 		}
+	}
+
+	void ChangeMainSelection(Seleccionable se){
+		selecs [selecs.IndexOf (se)] = selecs [0];
+		selecs [0] = se;
+		for (int i = 1; i < selecs.Count; i++) {
+			selecs [i].Invoke ("Deseleccion", 0.04f);
+		}
+		Invoke("UpdateSelection", 0.05f);
+	}
+
+	public void UpdateSelection(){
+		CreateSelectionPanels ();
+		CreateHabilityButtons ();
 	}
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Creativa : Habilidad {
 
 	GameObject projectionGO, unitGO;
-	Objeto objeto;
+	public Objeto objeto;
 	public List<float> amounts = new List<float>();
 	public List<Recurso> recursos = new List<Recurso>();
 
@@ -29,6 +29,7 @@ public class Creativa : Habilidad {
 				projection.Actualizar ();
 			} else if (nombre [0] == "Create Citizen") {
 				selec.productionQueue.Add (this);
+				selec.interfaz.CreateProductionPanels ();
 				GastarRecursos (selec);
 				if (selec.productionQueue.Count == 1) {
 					selec.maxProductionAmount = (objeto as Ficha).productionTime;
@@ -51,6 +52,7 @@ public class Creativa : Habilidad {
 				if (selec.productionQueue.Count > 0) {
 					selec.maxProductionAmount = (selec.productionQueue[0].objeto as Ficha).productionTime;
 				}
+				selec.interfaz.UpdateProductionIcons ();
 			}
 		}
 	}

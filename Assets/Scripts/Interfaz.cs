@@ -10,9 +10,9 @@ public class Interfaz : MonoBehaviour {
 	public int language;
 	public float interfaceFraction, sizeButtonX, sizeButtonY, margenX, margenY, sizePanRecursoX, sizePanRecursoY, margenXRecurso, margenYRecurso, 
 		sizePanSelectionX, sizePanSelectionY, margenXSelection, margenYSelection;
-	public Image icon, healthBar;
-	public Text nombre;
-	public Transform PanelHabilidades, PanelRecursos, PanelSelections;
+	public Image icon, healthBar, LowerProductionBar, UpperProductionBar;
+	public Text nombre, ProductionDescription;
+	public Transform PanelHabilidades, PanelRecursos, PanelSelections, PanelProduction;
 	public GameObject genPanRecurso, genPanSelection;
 	public Button DefaultButton;
 	public List<Seleccionable> selecs = new List<Seleccionable>();
@@ -20,6 +20,7 @@ public class Interfaz : MonoBehaviour {
 	public BaseDatos baseDatos;
 	public List<Text> textosRecursos = new List<Text>();
 	public List<Image> healthBars = new List<Image>();
+	public List<Image> productionIcons = new List<Image> ();
 
 	/* 
 	 * CHARLA SERIA: 
@@ -46,7 +47,11 @@ public class Interfaz : MonoBehaviour {
 		}
 		if (selecs.Count > 0) {
 			UpdateHealthBars ();
+			if (selecs [0].objeto.type == 2 && selecs [0].productionQueue.Count > 0) {
+				UpdateProductionBar ();
+			}
 		}
+
 	}
 
 
@@ -163,12 +168,17 @@ public class Interfaz : MonoBehaviour {
 				}
 				panSelection.GetComponentsInChildren<Image> () [1].sprite = objeto.icono;
 				healthBars.Add (rtrans.GetChild (1).GetChild (1).GetComponent<Image>());
-				panSelection.GetComponentInChildren<Button> ().name = "botoncillo";
 				panSelection.GetComponentInChildren<Button> ().onClick.AddListener(delegate {
 					ChangeMainSelection(sel);
 				});
 			}
 		}
+	}
+	public void CreateProductionPanels(){
+
+		PanelProduction.gameObject.SetActive (true);
+		UpdateProductionIcons ();
+
 	}
 	public void ClearButtons(){
 		nombre.text = "";
@@ -208,9 +218,40 @@ public class Interfaz : MonoBehaviour {
 		}
 		Invoke("UpdateSelection", 0.05f);
 	}
-
+	public void UpdateProductionBar(){
+		UpperProductionBar.rectTransform.anchorMax = new Vector2 (selecs[0].productionAmount / selecs[0].maxProductionAmount, UpperProductionBar.rectTransform.anchorMax.y);
+		UpperProductionBar.rectTransform.offsetMax = new Vector2 (0, 0);
+	}
+	public void UpdateProductionIcons(){
+		if (selecs [0].productionQueue.Count > 0) {
+			for (int i = 0; i < productionIcons.Count; i++) {
+				if (i < selecs [0].productionQueue.Count) {
+					productionIcons [i].sprite = selecs [0].productionQueue [i].objeto.icono;
+				} else {
+					productionIcons [i].sprite = null;
+				}
+			}
+			UpdateProductionBar ();
+			if (language == 0) {
+				ProductionDescription.text = "Training...";
+			} else if (language == 1) {
+				ProductionDescription.text = "Entrenando...";
+			}
+		} else {
+			PanelProduction.gameObject.SetActive (false);
+		
+		}
+	
+	}
 	public void UpdateSelection(){
-		CreateSelectionPanels ();
-		CreateHabilityButtons ();
+		PanelProduction.gameObject.SetActive (false);
+		if (selecs.Count > 0) {
+			if (selecs [0].objeto.type == 1) {
+				CreateSelectionPanels ();
+			} else if (selecs [0].objeto.type == 2 && selecs[0].productionQueue.Count>0) {
+				CreateProductionPanels ();
+			}		
+			CreateHabilityButtons ();
+		}
 	}
 }

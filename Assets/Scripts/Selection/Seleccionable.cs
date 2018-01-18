@@ -13,7 +13,7 @@ public class Seleccionable : MonoBehaviour {
 	public Objeto objeto;
 	public BaseDatos baseDatos;
 	Selection selection;
-	Interfaz interfaz;
+	public Interfaz interfaz;
 	Pathfinding pathfinding;
 	Control control;
 	Seleccionable fuente, cimientos;
@@ -31,7 +31,12 @@ public class Seleccionable : MonoBehaviour {
 	 * Los ciudadanos creados en el lado derecho del centro urbano no se mueven
 	 * por alguna razón desconocida.
 	 * 
+	 * UPDATE:
+	 * Los ciudadanos también deben de ir al nodo más cercano de uno ocupado, 
+	 * no ir hacia allí hasta que no puedan seguir y se paren, formando colas.
 	 * 
+	 * UPDATE:
+	 * Que no se haga selección grupal e individual al mismo tiempo.
 	 * 
 	 * */
 
@@ -72,18 +77,7 @@ public class Seleccionable : MonoBehaviour {
 		} else if (control.puntero == this) {
 			control.puntero = null;
 		}
-		if(Input.GetMouseButtonUp (0)){
-			Debug.Log ("Pulso ratón");
-			if( selection.IsWithinSelectionBounds(gameObject)){
-				Debug.Log ("Esta en los límites");
-				if(objeto.type ==1){
-					Debug.Log ("Es una unidad");
-
-				}
-			}
-		}
 		if (Input.GetMouseButtonUp (0)&& selection.IsWithinSelectionBounds(gameObject)&& objeto.type ==1) {
-			Debug.Log ("Se seleccionan");
 			Seleccion ();
 		}
 		if (Input.GetMouseButtonDown (0)&& Input.mousePosition.y > myCamera.pixelHeight*interfaz.interfaceFraction) {
@@ -159,6 +153,7 @@ public class Seleccionable : MonoBehaviour {
 		selected = false;
 		StopDrawing ();
 		interfaz.selecs.Remove (this);
+		interfaz.UpdateSelection ();
 	}
 
 	void DrawCircle ( float radius, int numSegments, Color c1) {

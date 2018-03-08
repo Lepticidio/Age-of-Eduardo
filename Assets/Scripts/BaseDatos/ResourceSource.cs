@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Decoration : Entity{
+public class ResourceSource : Entity {
 
-	public Decoration(string nombreEnglish ){
+	public Gathering gathering;
+
+	public ResourceSource(string nombreEnglish, Gathering gather){
+		gathering = gather;
 		nombre [0] = nombreEnglish;
-		type = 3;
+		type = 4;
 		icono = Resources.Load<Sprite> ("Sprites/Icons/" + nombreEnglish);
 
 	}

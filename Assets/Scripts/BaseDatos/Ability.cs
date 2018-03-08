@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Habilidad {
+public class Ability {
 	
 	//Tiene 3 clases hijas: Activa, Creativa y Recoleccion
 

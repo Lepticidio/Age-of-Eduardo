@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Edificio : Ficha {
+public class Building : Token {
 	public List<Sprite> sprites = new List<Sprite>();
 
-	public Edificio(string nombreEnglish, int nImage){
+	public Building(string nombreEnglish, int nImage){
 		nombre [0] = nombreEnglish;
 		type = 2;
 		icono = Resources.Load<Sprite> ("Sprites/Icons/" + nombreEnglish);

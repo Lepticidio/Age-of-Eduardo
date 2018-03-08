@@ -51,19 +51,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\BaseDatos\Activa.cs" />
-     <Compile Include="Assets\Scripts\BaseDatos\BaseDatos.cs" />
-     <Compile Include="Assets\Scripts\BaseDatos\Creativa.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\Ability.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\Active.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\Building.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\Creative.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\Database.cs" />
      <Compile Include="Assets\Scripts\BaseDatos\Decoration.cs" />
-     <Compile Include="Assets\Scripts\BaseDatos\Edad.cs" />
-     <Compile Include="Assets\Scripts\BaseDatos\Edificio.cs" />
-     <Compile Include="Assets\Scripts\BaseDatos\Ficha.cs" />
-     <Compile Include="Assets\Scripts\BaseDatos\FuenteRecurso.cs" />
-     <Compile Include="Assets\Scripts\BaseDatos\Habilidad.cs" />
-     <Compile Include="Assets\Scripts\BaseDatos\Objeto.cs" />
-     <Compile Include="Assets\Scripts\BaseDatos\Recoleccion.cs" />
-     <Compile Include="Assets\Scripts\BaseDatos\Recurso.cs" />
-     <Compile Include="Assets\Scripts\BaseDatos\Unidad.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\Entity.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\Gathering.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\Resource.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\ResourceSource.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\Token.cs" />
+     <Compile Include="Assets\Scripts\BaseDatos\Unit.cs" />
      <Compile Include="Assets\Scripts\Camera\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\Camera\Zoom.cs" />
      <Compile Include="Assets\Scripts\Control.cs" />

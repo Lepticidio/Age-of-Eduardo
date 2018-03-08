@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Objeto  {
+public class Entity  {
 	
 	//Tiene 3 clases hijas, Decoracion, FuenteRecurso y Ficha. Esta última tiene como hijas otras 2, Edificio y Unidad
 
@@ -10,9 +10,9 @@ public class Objeto  {
 	public float size, alto, ancho;
 	public string[] nombre = new string[2];
 
-	public List<Recoleccion> recolecciones = new List<Recoleccion>();
-	public List<Activa> activas = new List<Activa>();
-	public List<Creativa> creativas = new List<Creativa>();
+	public List<Gathering> gatherings = new List<Gathering>();
+	public List<Active> activas = new List<Active>();
+	public List<Creative> creatives = new List<Creative>();
 
 	public Sprite icono;
 

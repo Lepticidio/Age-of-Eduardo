@@ -10,15 +10,15 @@ public class Seleccionable : MonoBehaviour {
 	public string nombre;
 	public Camera myCamera;
 	GameObject botonDefecto, marcador;
-	public Objeto objeto;
-	public BaseDatos baseDatos;
+	public Entity entity;
+	public Database database;
 	Selection selection;
 	public Interfaz interfaz;
 	Pathfinding pathfinding;
 	Control control;
 	Seleccionable fuente, cimientos;
 	public List<Nodo> fronterizos = new List<Nodo>();
-	public List<Creativa> productionQueue = new List<Creativa> ();
+	public List<Creative> productionQueue = new List<Creative> ();
 
 	public float altura;
 
@@ -49,20 +49,20 @@ public class Seleccionable : MonoBehaviour {
 		myCamera = GameObject.Find ("Main Camera").GetComponent<Camera> ();		
 		control = GameObject.Find ("Controlador").GetComponent<Control> ();
 		selection = control.gameObject.GetComponent<Selection> ();
-		baseDatos= control.gameObject.GetComponent<BaseDatos> ();
+		database= control.gameObject.GetComponent<Database> ();
 		interfaz= control.gameObject.GetComponent<Interfaz> ();
 		marcador = Resources.Load<GameObject> ("MarcadorFresa");
 	}
 
 	void Start(){
-		objeto = baseDatos.searchObject (nombre);
-		altura = objeto.alto;
-		if (objeto.type == 1 || objeto.type == 2) {
-			health = (objeto as Ficha).health;
-			if (objeto.type == 1) {
+		entity = database.searchObject (nombre);
+		altura = entity.alto;
+		if (entity.type == 1 || entity.type == 2) {
+			health = (entity as Token).health;
+			if (entity.type == 1) {
 				pathfinding = gameObject.GetComponent<Pathfinding> ();
-				for (int i = 1 + (int)(transform.position.x - objeto.ancho / 2); i < 1 + (int)(transform.position.x + objeto.ancho / 2); i++) {
-					for (int j = 1 + (int)(transform.position.y - objeto.alto / 2); j < 1 + (int)(transform.position.y + objeto.alto / 2); j++) {
+				for (int i = 1 + (int)(transform.position.x - entity.ancho / 2); i < 1 + (int)(transform.position.x + entity.ancho / 2); i++) {
+					for (int j = 1 + (int)(transform.position.y - entity.alto / 2); j < 1 + (int)(transform.position.y + entity.alto / 2); j++) {
 						control.grid [i, j].bloqueado = true;
 					}
 				}
@@ -72,12 +72,12 @@ public class Seleccionable : MonoBehaviour {
 
 	void Update(){
 
-		if (Mathf.Abs (myCamera.ScreenToWorldPoint (Input.mousePosition).x - transform.position.x) < objeto.ancho / 2 && Mathf.Abs (myCamera.ScreenToWorldPoint (Input.mousePosition).y - transform.position.y) < objeto.alto / 2) {
+		if (Mathf.Abs (myCamera.ScreenToWorldPoint (Input.mousePosition).x - transform.position.x) < entity.ancho / 2 && Mathf.Abs (myCamera.ScreenToWorldPoint (Input.mousePosition).y - transform.position.y) < entity.alto / 2) {
 			control.puntero = this;
 		} else if (control.puntero == this) {
 			control.puntero = null;
 		}
-		if (Input.GetMouseButtonUp (0)&& selection.IsWithinSelectionBounds(gameObject)&& objeto.type ==1) {
+		if (Input.GetMouseButtonUp (0)&& selection.IsWithinSelectionBounds(gameObject)&& entity.type ==1) {
 			Seleccion ();
 		}
 		if (Input.GetMouseButtonDown (0)&& Input.mousePosition.y > myCamera.pixelHeight*interfaz.interfaceFraction) {
@@ -90,7 +90,7 @@ public class Seleccionable : MonoBehaviour {
 			}
 		}
 		if (selected) {
-			if (Input.GetMouseButtonDown (1) && objeto.type == 1 ) {
+			if (Input.GetMouseButtonDown (1) && entity.type == 1 ) {
 				Destinar ();
 			}
 
@@ -98,12 +98,12 @@ public class Seleccionable : MonoBehaviour {
 		if (productionQueue.Count>0) {
 			productionQueue [0].Work (this);
 		}
-		if (recolectando && Vector3.Distance (fuente.transform.position, transform.position) < fuente.objeto.size*2) {
-			(fuente.objeto as FuenteRecurso).recoleccion.Action (this);
+		if (recolectando && Vector3.Distance (fuente.transform.position, transform.position) < fuente.entity.size*2) {
+			(fuente.entity as ResourceSource).gathering.Action (this);
 		}
-		if (construyendo && Vector3.Distance (cimientos.transform.position, transform.position) < cimientos.objeto.size*2) {
+		if (construyendo && Vector3.Distance (cimientos.transform.position, transform.position) < cimientos.entity.size*2) {
 			if (!cimientos.construido) {
-				Activa activa = baseDatos.searchHabilidad ("Build") as Activa;
+				Active activa = database.searchAbility ("Build") as Active;
 				activa.Action (cimientos);
 			} else {
 				construyendo = false;
@@ -113,7 +113,7 @@ public class Seleccionable : MonoBehaviour {
 
 	public void Destinar(){
 		
-		if (control.puntero!= null&& control.puntero.objeto.type == 4&& objeto.recolecciones.Contains( (control.puntero.objeto as FuenteRecurso).recoleccion)&& !ocupado) {
+		if (control.puntero!= null&& control.puntero.entity.type == 4&& entity.gatherings.Contains( (control.puntero.entity as ResourceSource).gathering)&& !ocupado) {
 			fuente = control.puntero;
 			fuente.GetFronterizos ();
 			if (fuente.fronterizos.Count > 0) {
@@ -122,7 +122,7 @@ public class Seleccionable : MonoBehaviour {
 				pathfinding.pathfinding ();
 				recolectando = true;
 			}
-		}else if (control.puntero!= null&& control.puntero.objeto.type == 2&& objeto.creativas.Contains( baseDatos.searchHabilidad("Build Town Center") as Creativa)) {
+		}else if (control.puntero!= null&& control.puntero.entity.type == 2&& entity.creatives.Contains( database.searchAbility("Build Town Center") as Creative)) {
 			cimientos = control.puntero;
 			cimientos.GetFronterizos ();
 			if (cimientos.fronterizos.Count > 0) {
@@ -143,7 +143,7 @@ public class Seleccionable : MonoBehaviour {
 	void Seleccion(){
 		
 		selected = true;
-		DrawCircle(objeto.size, 128, Color.red);
+		DrawCircle(entity.size, 128, Color.red);
 		interfaz.selecs.Add(this);
 		interfaz.Invoke ("UpdateSelection", 0.04f);
 
@@ -188,8 +188,8 @@ public class Seleccionable : MonoBehaviour {
 
 	public void GetFronterizos(){
 		fronterizos.Clear ();
-		for (int i = (int)(transform.position.x - objeto.ancho / 2); i < (int)(transform.position.x + objeto.ancho / 2)+2; i++) {
-			for (int j = (int)(transform.position.y - objeto.alto / 2); j < (int)(transform.position.y + objeto.alto / 2)+2; j++) {
+		for (int i = (int)(transform.position.x - entity.ancho / 2); i < (int)(transform.position.x + entity.ancho / 2)+2; i++) {
+			for (int j = (int)(transform.position.y - entity.alto / 2); j < (int)(transform.position.y + entity.alto / 2)+2; j++) {
 				if (!control.grid [i, j].bloqueado) {
 					fronterizos.Add (control.grid [i, j]);
 					//Instantiate(marcador, new Vector3( control.grid [i, j].x, control.grid [i, j].y), Quaternion.identity);

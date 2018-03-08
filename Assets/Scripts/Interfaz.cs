@@ -8,17 +8,17 @@ public class Interfaz : MonoBehaviour {
 	bool iniciada;
 	public bool cleared = true;
 	public int language;
-	public float interfaceFraction, sizeButtonX, sizeButtonY, margenX, margenY, sizePanRecursoX, sizePanRecursoY, margenXRecurso, margenYRecurso, 
+	public float interfaceFraction, sizeButtonX, sizeButtonY, margenX, margenY, sizePanResourceX, sizePanResourceY, margenXResource, margenYResource, 
 		sizePanSelectionX, sizePanSelectionY, margenXSelection, margenYSelection;
 	public Image icon, healthBar, LowerProductionBar, UpperProductionBar;
 	public Text nombre, ProductionDescription;
-	public Transform PanelHabilidades, PanelRecursos, PanelSelections, PanelProduction;
-	public GameObject genPanRecurso, genPanSelection;
+	public Transform PanelHabilidades, Panelresources, PanelSelections, PanelProduction;
+	public GameObject genPanResource, genPanSelection;
 	public Button DefaultButton;
 	public List<Seleccionable> selecs = new List<Seleccionable>();
 	public Jugador jugador;
-	public BaseDatos baseDatos;
-	public List<Text> textosRecursos = new List<Text>();
+	public Database database;
+	public List<Text> textosresources = new List<Text>();
 	public List<Image> healthBars = new List<Image>();
 	public List<Image> productionIcons = new List<Image> ();
 
@@ -32,7 +32,7 @@ public class Interfaz : MonoBehaviour {
 	 * */
 
 	void Awake(){
-		baseDatos= gameObject.GetComponent<BaseDatos> ();
+		database= gameObject.GetComponent<Database> ();
 	}
 
 	void Start(){
@@ -41,13 +41,13 @@ public class Interfaz : MonoBehaviour {
 	}
 
 	void Update(){
-		ActualizarRecursos ();
+		Actualizarresources ();
 		if (!cleared && selecs.Count == 0) {
 			ClearButtons ();
 		}
 		if (selecs.Count > 0) {
 			UpdateHealthBars ();
-			if (selecs [0].objeto.type == 2 && selecs [0].productionQueue.Count > 0) {
+			if (selecs [0].entity.type == 2 && selecs [0].productionQueue.Count > 0) {
 				UpdateProductionBar ();
 			}
 		}
@@ -58,14 +58,14 @@ public class Interfaz : MonoBehaviour {
 
 
 	public void CreateHabilityButtons(){
-		nombre.text = selecs[0].objeto.nombre[language];
-		icon.sprite = selecs[0].objeto.icono;
+		nombre.text = selecs[0].entity.nombre[language];
+		icon.sprite = selecs[0].entity.icono;
 		float xMax = sizeButtonX;
 		float xMin= margenX;
 		float yMax = margenY;
 		float yMin = margenY - sizeButtonY;
-		for (int i = 0; i < selecs[0].objeto.creativas.Count; i++) {
-			Creativa creativa = selecs[0].objeto.creativas [i];
+		for (int i = 0; i < selecs[0].entity.creatives.Count; i++) {
+			Creative creative = selecs[0].entity.creatives [i];
 			Button boton = (Button)Instantiate (DefaultButton,PanelHabilidades);
 			RectTransform rtrans = boton.transform as RectTransform;
 			rtrans.anchorMax = new Vector2(xMax, yMax);
@@ -81,13 +81,13 @@ public class Interfaz : MonoBehaviour {
 				yMin -= sizeButtonY;
 			
 			}
-			boton.image.sprite = creativa.icono;
-			boton.onClick.AddListener(delegate{creativa.Action(selecs[0]);});
+			boton.image.sprite = creative.icono;
+			boton.onClick.AddListener(delegate{creative.Action(selecs[0]);});
 
 
 		}
-		for (int i = 0; i < selecs[0].objeto.activas.Count; i++) {
-			Activa activa = selecs[0].objeto.activas [i];
+		for (int i = 0; i < selecs[0].entity.activas.Count; i++) {
+			Active activa = selecs[0].entity.activas [i];
 			Button boton = (Button)Instantiate (DefaultButton,PanelHabilidades);
 			RectTransform rtrans = boton.transform as RectTransform;
 			rtrans.anchorMax = new Vector2(xMax, yMax);
@@ -113,31 +113,31 @@ public class Interfaz : MonoBehaviour {
 	}
 
 	public void CreateResourcePanels(){		
-		float xMax = sizePanRecursoX;
-		float xMin= margenXRecurso;
-		float yMax = margenYRecurso;
-		float yMin = margenYRecurso - sizePanRecursoY;
-		for (int i = 0; i < jugador.recursos.Count; i++) {
-			GameObject panRecurso = Instantiate (genPanRecurso,PanelRecursos);
-			RectTransform rtrans = panRecurso.transform as RectTransform;
-			Recurso recurso = baseDatos.recursos [i];
+		float xMax = sizePanResourceX;
+		float xMin= margenXResource;
+		float yMax = margenYResource;
+		float yMin = margenYResource - sizePanResourceY;
+		for (int i = 0; i < jugador.resources.Count; i++) {
+			GameObject panResource = Instantiate (genPanResource,Panelresources);
+			RectTransform rtrans = panResource.transform as RectTransform;
+			Resource recurso = database.resources [i];
 			rtrans.anchorMax = new Vector2(xMax, yMax);
 			rtrans.anchorMin = new Vector2(xMin, yMin);
 			rtrans.offsetMax = new Vector2(0,0);
 			rtrans.offsetMin = new Vector2(0,0);
-			xMax+= sizePanRecursoX;
-			xMin+= sizePanRecursoX;
+			xMax+= sizePanResourceX;
+			xMin+= sizePanResourceX;
 			if (xMax > 1) {
-				xMax = sizePanRecursoX;
-				xMin= margenXRecurso;
-				yMax -= sizePanRecursoY;
-				yMin -= sizePanRecursoY;
+				xMax = sizePanResourceX;
+				xMin= margenXResource;
+				yMax -= sizePanResourceY;
+				yMin -= sizePanResourceY;
 
 			}
-			panRecurso.GetComponentsInChildren<Image>()[1].sprite = recurso.icono;
-			Text textoRecurso = panRecurso.GetComponentInChildren<Text> ();
-			textoRecurso.text = ((int)jugador.recursos[i]).ToString();
-			textosRecursos.Add (textoRecurso);
+			panResource.GetComponentsInChildren<Image>()[1].sprite = recurso.icono;
+			Text textoResource = panResource.GetComponentInChildren<Text> ();
+			textoResource.text = ((int)jugador.resources[i]).ToString();
+			textosresources.Add (textoResource);
 		}
 	}
 	public void CreateSelectionPanels(){
@@ -152,7 +152,7 @@ public class Interfaz : MonoBehaviour {
 				Seleccionable sel = selecs [i];
 				GameObject panSelection = Instantiate (genPanSelection, PanelSelections);
 				RectTransform rtrans = panSelection.transform as RectTransform;
-				Objeto objeto = sel.objeto;
+				Entity entity = sel.entity;
 				rtrans.anchorMax = new Vector2 (xMax, yMax);
 				rtrans.anchorMin = new Vector2 (xMin, yMin);
 				rtrans.offsetMax = new Vector2 (0, 0);
@@ -166,7 +166,7 @@ public class Interfaz : MonoBehaviour {
 					yMin -= sizePanSelectionY;
 
 				}
-				panSelection.GetComponentsInChildren<Image> () [1].sprite = objeto.icono;
+				panSelection.GetComponentsInChildren<Image> () [1].sprite = entity.icono;
 				healthBars.Add (rtrans.GetChild (1).GetChild (1).GetComponent<Image>());
 				panSelection.GetComponentInChildren<Button> ().onClick.AddListener(delegate {
 					ChangeMainSelection(sel);
@@ -174,6 +174,11 @@ public class Interfaz : MonoBehaviour {
 			}
 		}
 	}
+
+	void CreateTooltip(){
+		Debug.Log ("Ratón arriba");
+	}
+
 	public void CreateProductionPanels(){
 
 		PanelProduction.gameObject.SetActive (true);
@@ -188,15 +193,15 @@ public class Interfaz : MonoBehaviour {
 		}
 		cleared = true;
 	}
-	void ActualizarRecursos(){
-		for (int i = 0; i< textosRecursos.Count; i++) {
-			textosRecursos[i].text = ((int)jugador.recursos[i]).ToString();
+	void Actualizarresources(){
+		for (int i = 0; i< textosresources.Count; i++) {
+			textosresources[i].text = ((int)jugador.resources[i]).ToString();
 		}
 	}
 	void UpdateHealthBar(Image image ,Seleccionable sel){
 		if (image != null) {
-			if (selecs [0].objeto.type == 1 || selecs [0].objeto.type == 2) {
-				image.rectTransform.anchorMax = new Vector2 (sel.health / (sel.objeto as Ficha).health, image.rectTransform.anchorMax.y);
+			if (selecs [0].entity.type == 1 || selecs [0].entity.type == 2) {
+				image.rectTransform.anchorMax = new Vector2 (sel.health / (sel.entity as Token).health, image.rectTransform.anchorMax.y);
 				image.rectTransform.offsetMax = new Vector2 (0, 0);
 			}
 		}
@@ -226,7 +231,7 @@ public class Interfaz : MonoBehaviour {
 		if (selecs [0].productionQueue.Count > 0) {
 			for (int i = 0; i < productionIcons.Count; i++) {
 				if (i < selecs [0].productionQueue.Count) {
-					productionIcons [i].sprite = selecs [0].productionQueue [i].objeto.icono;
+					productionIcons [i].sprite = selecs [0].productionQueue [i].entity.icono;
 				} else {
 					productionIcons [i].sprite = null;
 				}
@@ -246,9 +251,9 @@ public class Interfaz : MonoBehaviour {
 	public void UpdateSelection(){
 		PanelProduction.gameObject.SetActive (false);
 		if (selecs.Count > 0) {
-			if (selecs [0].objeto.type == 1) {
+			if (selecs [0].entity.type == 1) {
 				CreateSelectionPanels ();
-			} else if (selecs [0].objeto.type == 2 && selecs[0].productionQueue.Count>0) {
+			} else if (selecs [0].entity.type == 2 && selecs[0].productionQueue.Count>0) {
 				CreateProductionPanels ();
 			}		
 			CreateHabilityButtons ();

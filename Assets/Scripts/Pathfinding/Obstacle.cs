@@ -5,8 +5,8 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour {
 
 	public Control control;
-	public Objeto objeto;
-	public BaseDatos baseDatos;
+	public Entity entity;
+	public Database database;
 	public Seleccionable seleccionable;
 
 	void Awake(){
@@ -21,11 +21,11 @@ public class Obstacle : MonoBehaviour {
 	}
 
 	void Actualizar(){
-		objeto = seleccionable.objeto;
-		baseDatos = seleccionable.baseDatos;
-		control = baseDatos.gameObject.GetComponent<Control> ();
-		for (int i =1 + (int)(transform.position.x - objeto.ancho / 2); i < 1+(int)(transform.position.x + objeto.ancho / 2); i++) {
-			for (int j = 1+(int)(transform.position.y - objeto.alto / 2); j < 1+(int)(transform.position.y + objeto.alto / 2); j++) {
+		entity = seleccionable.entity;
+		database = seleccionable.database;
+		control = database.gameObject.GetComponent<Control> ();
+		for (int i =1 + (int)(transform.position.x - entity.ancho / 2); i < 1+(int)(transform.position.x + entity.ancho / 2); i++) {
+			for (int j = 1+(int)(transform.position.y - entity.alto / 2); j < 1+(int)(transform.position.y + entity.alto / 2); j++) {
 				control.grid [i, j].bloqueado = true;
 			}
 		}

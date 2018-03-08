@@ -6,12 +6,12 @@ public class Projection : MonoBehaviour {
 
 	public Camera myCamera;
 	bool posible;
-	public Edificio edificio;
+	public Building building;
 	SpriteRenderer sr;
 	public Control control;
-	public GameObject edificioGO;
+	public GameObject buildingGO;
 	public Seleccionable selec;
-	public Creativa creativa;
+	public Creative creative;
 	public Jugador jugador;
 
 	void Awake(){
@@ -42,15 +42,15 @@ public class Projection : MonoBehaviour {
 
 		if(Input.GetMouseButtonUp(1)&&posible){
 			selec.ocupado = false;
-			GameObject edi = Instantiate (control.edificio, transform.position,Quaternion.identity);
-			edi.GetComponent<Obstacle> ().objeto = edificio;
+			GameObject edi = Instantiate (control.building, transform.position,Quaternion.identity);
+			edi.GetComponent<Obstacle> ().entity = building;
 			Seleccionable sel = edi.GetComponent<Seleccionable> ();
-			sel.objeto = edificio;
-			sel.maxBuildAmount = edificio.productionTime;
+			sel.entity = building;
+			sel.maxBuildAmount = building.productionTime;
 			sel.construido = false;
 			sel.jugador = jugador;
-			sel.GetComponent<SpriteRenderer> ().sprite = edificio.sprites [1];
-			creativa.GastarRecursos (selec);
+			sel.GetComponent<SpriteRenderer> ().sprite = building.sprites [1];
+			creative.SpendResources (selec);
 			selec.Invoke ("Destinar", 0.05f);
 			Destroy(gameObject);
 		}
@@ -62,8 +62,8 @@ public class Projection : MonoBehaviour {
 
 	bool CheckPosition(){
 		bool resultado = true;
-		for (int i = (int)(transform.position.x - edificio.ancho / 2); i < (int)(transform.position.x + edificio.ancho / 2); i++) {
-			for (int j = (int)(transform.position.y - edificio.alto / 2); j <(int)(transform.position.y + edificio.alto / 2); j++) {
+		for (int i = (int)(transform.position.x - building.ancho / 2); i < (int)(transform.position.x + building.ancho / 2); i++) {
+			for (int j = (int)(transform.position.y - building.alto / 2); j <(int)(transform.position.y + building.alto / 2); j++) {
 				if (i<0||j<0||i>=control.ancho||j>=control.alto ||control.grid [i, j].bloqueado) {
 					resultado = false;
 				}
@@ -84,6 +84,6 @@ public class Projection : MonoBehaviour {
 	}
 
 	public void Actualizar (){
-		sr.sprite = edificio.sprites[0];
+		sr.sprite = building.sprites[0];
 	}
 }

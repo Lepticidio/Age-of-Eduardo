@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Creativa : Habilidad {
+public class Creative : Ability {
 
 	GameObject projectionGO, unitGO;
-	public Objeto objeto;
+	public Entity entity;
 	public List<float> amounts = new List<float>();
-	public List<Recurso> recursos = new List<Recurso>();
+	public List<Resource> resources = new List<Resource>();
 
-	public Creativa(string nombreEnglish, Objeto obj){
-		objeto = obj;
+	public Creative(string nombreEnglish, Entity obj){
+		entity = obj;
 		type = 2;
 		nombre [0] = nombreEnglish;
 		icono = obj.icono;
@@ -18,29 +18,29 @@ public class Creativa : Habilidad {
 		unitGO = Resources.Load<GameObject> ("Unit");
 	}
 	public void Action(Seleccionable selec){
-		if (RecursosRequeridos (selec.jugador)) {
+		if (ResourcesRequeridos (selec.jugador)) {
 			if (nombre [0] == "Build Town Center") {
 				Projection projection = MonoBehaviour.Instantiate (projectionGO).GetComponent<Projection> ();
-				projection.edificio = objeto as Edificio;
+				projection.building = entity as Building;
 				projection.selec = selec;
-				projection.creativa = this;
+				projection.creative = this;
 				projection.jugador = selec.jugador;
 				selec.ocupado = true;
 				projection.Actualizar ();
 			} else if (nombre [0] == "Create Citizen") {
 				selec.productionQueue.Add (this);
 				selec.interfaz.CreateProductionPanels ();
-				GastarRecursos (selec);
+				SpendResources (selec);
 				if (selec.productionQueue.Count == 1) {
-					selec.maxProductionAmount = (objeto as Ficha).productionTime;
+					selec.maxProductionAmount = (entity as Token).productionTime;
 				}
 			}
 		}
 	}
 	public void Work(Seleccionable selec){
-		Ficha ficha = selec.objeto as Ficha;
-		if (selec.productionAmount < selec.maxProductionAmount - ficha.productionRate) {
-			selec.productionAmount += ficha.productionRate;
+		Token token = selec.entity as Token;
+		if (selec.productionAmount < selec.maxProductionAmount - token.productionRate) {
+			selec.productionAmount += token.productionRate;
 
 		} else {
 			selec.GetFronterizos ();
@@ -50,24 +50,24 @@ public class Creativa : Habilidad {
 				selec.productionQueue.RemoveAt (0);
 				selec.productionAmount = 0;
 				if (selec.productionQueue.Count > 0) {
-					selec.maxProductionAmount = (selec.productionQueue[0].objeto as Ficha).productionTime;
+					selec.maxProductionAmount = (selec.productionQueue[0].entity as Token).productionTime;
 				}
 				selec.interfaz.UpdateProductionIcons ();
 			}
 		}
 	}
-	public bool RecursosRequeridos(Jugador jug){
+	public bool ResourcesRequeridos(Jugador jug){
 		bool resultado = true;
-		for (int i = 0; i < recursos.Count; i++) {
-			if (jug.recursos [recursos [i].ID] < amounts [i]) {
+		for (int i = 0; i < resources.Count; i++) {
+			if (jug.resources [resources [i].ID] < amounts [i]) {
 				resultado = false;
 			}
 		}
 		return resultado;
 	}
-	public void GastarRecursos(Seleccionable selec){
-		for (int i = 0; i < recursos.Count; i++) {
-			selec.jugador.recursos [recursos [i].ID] -= amounts [i];
+	public void SpendResources(Seleccionable selec){
+		for (int i = 0; i < resources.Count; i++) {
+			selec.jugador.resources [resources [i].ID] -= amounts [i];
 		}
 	}
 }

@@ -2,15 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unidad: Ficha {
+public class Resource  {
 
 
+	public string[] nombre = new string[2];
+	public Sprite icono;
+	public int ID;
 
-	public Unidad(string nombreEnglish ){
+
+	public Resource(string nombreEnglish, int id){
+
+		ID = id;
 		nombre [0] = nombreEnglish;
-		type = 1;
 		icono = Resources.Load<Sprite> ("Sprites/Icons/" + nombreEnglish);
 
 	}
+
 
 }
